@@ -1,0 +1,269 @@
+---
+import {
+  businessUnits,
+  getBusinessEditorial,
+  getBusinessPageCopy,
+  type BusinessLanguage,
+} from '../data/business';
+import '../styles/business.css';
+
+interface Props { lang?: BusinessLanguage; }
+const { lang = 'en' } = Astro.props;
+const copy = getBusinessPageCopy(lang);
+---
+
+<main class="business-page" data-business-page>
+  <div class="business-brand" aria-hidden="true">
+    <img src="/images/brand/bolos.svg" alt="" width="1920" height="1080" />
+  </div>
+
+  <section class="business-introduction" data-business-reveal aria-labelledby="business-introduction-title">
+    <h1 id="business-introduction-title">
+      <span>OUR</span>
+      <strong>{copy.maisonTotal}</strong>
+      <span>MAISONS</span>
+    </h1>
+    <div class="business-introduction-copy">
+      {copy.intro.map(paragraph => <p>{paragraph}</p>)}
+    </div>
+  </section>
+
+  <section class="business-carousel" aria-label="Business Units" data-business-carousel>
+    <div class="carousel-viewport" tabindex="0" aria-roledescription="carousel">
+      <div class="carousel-track" data-carousel-track>
+        {businessUnits.map((unit, index) => (
+          <figure class="carousel-slide" data-carousel-slide data-index={index} aria-hidden={index === 2 ? 'false' : 'true'}>
+            <img src={`/images/business/${unit.carouselImage}`} alt={unit.imageAlt} width="1672" height="941" fetchpriority={index === 2 ? 'high' : undefined} loading={index === 2 ? 'eager' : 'lazy'} />
+          </figure>
+        ))}
+      </div>
+
+      <button class="carousel-arrow carousel-arrow-previous" type="button" data-carousel-previous aria-label={copy.previous}>←</button>
+      <button class="carousel-arrow carousel-arrow-next" type="button" data-carousel-next aria-label={copy.next}>→</button>
+
+      <div class="carousel-information" aria-live="polite">
+        {businessUnits.map((unit, index) => {
+          const editorial = getBusinessEditorial(unit, lang);
+          return (
+            <article class:list={['carousel-information-panel', { 'is-active': index === 2 }]} data-carousel-information={index} aria-hidden={index === 2 ? 'false' : 'true'}>
+              <h2>{editorial.carouselTitle}</h2>
+              <div class="carousel-information-copy">
+                {editorial.carouselCopy.map(paragraph => <p>{paragraph}</p>)}
+              </div>
+              <span class="carousel-see" data-future-maison-action>{copy.seeMaisons}</span>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="business-leadership" data-business-reveal aria-labelledby="business-leadership-title">
+    <figure class="business-leadership-portrait">
+      <img src="/images/business/media-group-portrait.png" alt="Seb Cornichon seated beside The Kahrdinal" width="1024" height="1536" loading="lazy" />
+    </figure>
+    <div class="business-leadership-copy">
+      <h2 id="business-leadership-title">{copy.leadership.heading}</h2>
+      <p>{copy.leadership.opening}</p>
+      <p>{copy.leadership.seb.overview}</p>
+      <blockquote>
+        <p>{copy.leadership.seb.quote}</p>
+        <cite>{copy.leadership.seb.name}</cite>
+      </blockquote>
+      {copy.leadership.kahrdinal.overview.map(paragraph => <p>{paragraph}</p>)}
+      <blockquote>
+        <p>{copy.leadership.kahrdinal.quote}</p>
+        <cite>{copy.leadership.kahrdinal.name}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <nav class="business-chapters" aria-label={copy.chapterLabel} data-business-reveal>
+    <ul>
+      {businessUnits.map((unit, index) => (
+        <li>
+          <button type="button" class="business-chapter-button" data-business-switch={unit.id} aria-controls={`business-${unit.id}`} aria-pressed={index === 2 ? 'true' : 'false'}>
+            {unit.shortName}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="business-units" data-business-reveal aria-live="polite">
+    {businessUnits.map((unit, unitIndex) => {
+      const editorial = getBusinessEditorial(unit, lang);
+      return (
+        <section class:list={['business-unit', { 'has-no-images': unit.maisonImages.length === 0 }]} id={`business-${unit.id}`} data-business-unit={unit.id} aria-labelledby={`business-title-${unit.id}`} aria-hidden={unitIndex === 2 ? 'false' : 'true'} hidden={unitIndex !== 2}>
+          <div class="business-unit-copy">
+            <span class="business-unit-number" aria-hidden="true">{String(unitIndex + 1).padStart(2, '0')}</span>
+            <h2 id={`business-title-${unit.id}`}>{editorial.sectionTitle}</h2>
+            <div class="business-unit-editorial">
+              {editorial.sectionCopy.map(paragraph => <p>{paragraph}</p>)}
+            </div>
+            <div class="business-unit-maisons">
+              <p class="business-unit-count">{unit.maisons.length} MAISONS</p>
+              <ul class="business-maison-list">
+                {unit.maisons.map(maison => <li>{maison}</li>)}
+              </ul>
+            </div>
+          </div>
+
+          <div class:list={['business-maison-grid', { 'is-empty': unit.maisonImages.length === 0 }]} aria-label={unit.maisonImages.length ? `${unit.name} editorial images` : undefined} aria-hidden={unit.maisonImages.length === 0 ? 'true' : undefined}>
+            {unit.maisonImages.map((image, imageIndex) => (
+              <figure class="business-maison-image" style={`--maison-index:${imageIndex}`}>
+                <img src={`/images/business/${image.file}`} alt={image.alt} width="1080" height="1080" loading="lazy" />
+                <figcaption>{image.alt}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</main>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-business-page]').forEach(page => {
+    if (page.dataset.businessInitialised === 'true') return;
+    page.dataset.businessInitialised = 'true';
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const carousel = page.querySelector<HTMLElement>('[data-business-carousel]');
+    const viewport = carousel?.querySelector<HTMLElement>('.carousel-viewport');
+    const track = carousel?.querySelector<HTMLElement>('[data-carousel-track]');
+    const originalSlides = Array.from(carousel?.querySelectorAll<HTMLElement>('[data-carousel-slide]') ?? []);
+    const panels = Array.from(carousel?.querySelectorAll<HTMLElement>('[data-carousel-information]') ?? []);
+    const previous = carousel?.querySelector<HTMLButtonElement>('[data-carousel-previous]');
+    const next = carousel?.querySelector<HTMLButtonElement>('[data-carousel-next]');
+    if (track && originalSlides.length > 1) {
+      const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
+      const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true) as HTMLElement;
+      [firstClone, lastClone].forEach(clone => {
+        clone.dataset.carouselClone = 'true';
+        clone.removeAttribute('data-index');
+        clone.classList.remove('is-active');
+        clone.setAttribute('aria-hidden', 'true');
+      });
+      track.prepend(lastClone);
+      track.append(firstClone);
+    }
+    const slides = Array.from(carousel?.querySelectorAll<HTMLElement>('[data-carousel-slide]') ?? []);
+    let activeIndex = Math.min(2, originalSlides.length - 1);
+    let visualIndex = activeIndex + (slides.length > originalSlides.length ? 1 : 0);
+    let pointerStart = 0;
+    let resizeFrame = 0;
+    let transitionTimer = 0;
+    let isAnimating = false;
+
+    const finishTransition = () => {
+      clearTimeout(transitionTimer);
+      if (!isAnimating) return;
+      isAnimating = false;
+      if (visualIndex === 0) {
+        visualIndex = originalSlides.length;
+        updateCarousel(false);
+      } else if (visualIndex === slides.length - 1) {
+        visualIndex = 1;
+        updateCarousel(false);
+      }
+    };
+
+    const updateCarousel = (animate = true) => {
+      if (!viewport || !track || !slides.length) return;
+      const activeSlide = slides[visualIndex];
+      const offset = viewport.clientWidth / 2 - (activeSlide.offsetLeft + activeSlide.offsetWidth / 2);
+      const withoutTransition = !animate || reducedMotion;
+      track.classList.toggle('without-transition', withoutTransition);
+      if (withoutTransition) track.getBoundingClientRect();
+      track.style.setProperty('--carousel-offset', `${offset}px`);
+      if (withoutTransition) track.getBoundingClientRect();
+      slides.forEach((slide, index) => {
+        const active = index === visualIndex;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', String(!active || slide.dataset.carouselClone === 'true'));
+      });
+      panels.forEach((panel, index) => {
+        const active = index === activeIndex;
+        panel.classList.toggle('is-active', active);
+        panel.setAttribute('aria-hidden', String(!active));
+      });
+      if (previous) previous.disabled = false;
+      if (next) next.disabled = false;
+      carousel?.classList.add('is-ready');
+      isAnimating = animate && !reducedMotion;
+      if (isAnimating) transitionTimer = window.setTimeout(finishTransition, 1100);
+      else requestAnimationFrame(() => track.classList.remove('without-transition'));
+    };
+
+    const move = (direction: number) => {
+      if (isAnimating || originalSlides.length < 2) return;
+      const nextIndex = activeIndex + direction;
+      if (nextIndex < 0) {
+        activeIndex = originalSlides.length - 1;
+        visualIndex = 0;
+      } else if (nextIndex >= originalSlides.length) {
+        activeIndex = 0;
+        visualIndex = slides.length - 1;
+      } else {
+        activeIndex = nextIndex;
+        visualIndex = activeIndex + 1;
+      }
+      updateCarousel();
+    };
+
+    previous?.addEventListener('click', () => move(-1));
+    next?.addEventListener('click', () => move(1));
+    viewport?.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
+    });
+    viewport?.addEventListener('pointerdown', event => { pointerStart = event.clientX; });
+    viewport?.addEventListener('pointerup', event => {
+      const distance = event.clientX - pointerStart;
+      if (Math.abs(distance) > 48) move(distance > 0 ? -1 : 1);
+    });
+    track?.addEventListener('transitionend', event => {
+      if (event.target === track && event.propertyName === 'transform') finishTransition();
+    });
+
+    addEventListener('resize', () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => updateCarousel(false));
+    }, { passive: true });
+    updateCarousel(false);
+
+    const unitButtons = Array.from(page.querySelectorAll<HTMLButtonElement>('[data-business-switch]'));
+    const unitSections = Array.from(page.querySelectorAll<HTMLElement>('[data-business-unit]'));
+    let activeUnitIndex = Math.max(0, unitSections.findIndex(section => section.dataset.businessUnit === 'media-group'));
+
+    const showBusinessUnit = (nextIndex: number, animate = true) => {
+      if (!unitSections[nextIndex] || nextIndex === activeUnitIndex && !unitSections[nextIndex].hidden) return;
+      activeUnitIndex = nextIndex;
+      unitSections.forEach((section, index) => {
+        const active = index === activeUnitIndex;
+        section.hidden = !active;
+        section.setAttribute('aria-hidden', String(!active));
+        section.classList.remove('is-switching-in');
+        if (active && animate && !reducedMotion) {
+          section.getBoundingClientRect();
+          section.classList.add('is-switching-in');
+        }
+      });
+      unitButtons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === activeUnitIndex)));
+    };
+
+    unitButtons.forEach((button, index) => button.addEventListener('click', () => showBusinessUnit(index)));
+    showBusinessUnit(activeUnitIndex, false);
+
+    const reveals = page.querySelectorAll<HTMLElement>('[data-business-reveal]');
+    if (reducedMotion || !('IntersectionObserver' in window)) reveals.forEach(element => element.classList.add('is-visible'));
+    else {
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }), { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+      reveals.forEach(element => observer.observe(element));
+    }
+  });
+</script>

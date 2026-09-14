@@ -1,0 +1,56 @@
+---
+interface Props { lang?: 'en' | 'fr'; }
+const { lang = 'en' } = Astro.props;
+---
+<div class="back-to-top-slot">
+  <button class="back-to-top" type="button" aria-label={lang === 'fr' ? 'Retour en haut' : 'Back to top'} hidden>
+    <span class="back-to-top-label" aria-hidden="true">
+      <span class="back-to-top-label-compact">UP</span>
+      <span class="back-to-top-label-expanded">RUISSELLEMENT</span>
+    </span>
+    <span class="back-to-top-arrow" aria-hidden="true">↑</span>
+  </button>
+</div>
+<style>
+  .back-to-top-slot { position: relative; height: 0; }
+  .back-to-top { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 20; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 5px; width: 60px; min-height: 44px; padding: 10px 12px; overflow: hidden; white-space: nowrap; border: 1px solid rgb(20 20 20 / 15%); background: rgb(239 239 239 / 90%); color: #555; font: 400 12px/1.2 var(--font-corporate, 'Bellota Text', Arial, sans-serif); letter-spacing: .1em; cursor: pointer; transition: width 280ms ease-out, color 300ms ease-out, background 300ms ease-out; }
+  .back-to-top-label { position: relative; display: block; min-width: 0; height: 1.2em; overflow: hidden; }
+  .back-to-top-label-compact, .back-to-top-label-expanded { position: absolute; top: 50%; right: 0; transform: translateY(-50%); }
+  .back-to-top-label-compact { opacity: 1; transition: opacity 100ms ease-out; }
+  .back-to-top-label-expanded { opacity: 0; clip-path: inset(0 0 0 100%); transition: clip-path 280ms ease-out, opacity 100ms ease-out; }
+  .back-to-top-arrow { justify-self: end; }
+  .back-to-top:focus-visible { width: 164px; color: #080808; background: #efefef; }
+  .back-to-top:focus-visible .back-to-top-label-compact { opacity: 0; }
+  .back-to-top:focus-visible .back-to-top-label-expanded { opacity: 1; clip-path: inset(0); }
+  @media (hover: hover) and (pointer: fine) {
+    .back-to-top:hover { width: 164px; color: #080808; background: #efefef; }
+    .back-to-top:hover .back-to-top-label-compact { opacity: 0; }
+    .back-to-top:hover .back-to-top-label-expanded { opacity: 1; clip-path: inset(0); }
+  }
+  .back-to-top:focus-visible { outline: 1px solid #111; outline-offset: 3px; }
+  .back-to-top.is-docked { position: absolute; right: 0; bottom: 12px; }
+  .back-to-top[hidden] { display: none; }
+  @media (prefers-reduced-motion: reduce) { .back-to-top, .back-to-top-label-compact, .back-to-top-label-expanded { transition-duration: 1ms; } }
+</style>
+<script>
+  const slot = document.querySelector<HTMLElement>('.back-to-top-slot');
+  const up = slot?.querySelector<HTMLButtonElement>('.back-to-top');
+  if (slot && up) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let queued = false;
+    const update = () => {
+      queued = false;
+      up.hidden = window.scrollY < 300;
+      // Dock in the footer's existing top padding before reaching its content.
+      up.classList.toggle('is-docked', slot.getBoundingClientRect().top <= window.innerHeight - 4);
+    };
+    const requestUpdate = () => {
+      if (!queued) { queued = true; requestAnimationFrame(update); }
+    };
+    up.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'instant' : 'smooth' }));
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('pageshow', update);
+    update();
+  }
+</script>

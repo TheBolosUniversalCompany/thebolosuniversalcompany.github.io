@@ -1,0 +1,145 @@
+---
+import { board, conduct, exco } from '../data/group';
+import '../styles/group.css';
+const imagePath = (image: string, shared = false) => shared ? `/images/${image}` : `/images/group/${image}`;
+---
+<main class="group-page">
+  <section class="group-hero" aria-labelledby="group-title">
+    <img class="group-hero-image" data-group-parallax src="/images/group/hero-board.png" alt="The Board of 2026" fetchpriority="high" />
+    <div class="group-logo" aria-hidden="true"><img src="/images/brand/bolos.svg" alt="" width="1920" height="1080" /></div>
+    <div class="group-hero-title"><h1 id="group-title">Le BOARD of 2026</h1><p>Ours distinguished Billionaires</p></div>
+  </section>
+
+  <div class="group-gap group-gap--hero" aria-hidden="true"></div>
+
+  <section class="mission-guide" data-group-reveal>
+    <figure><img src="/images/group/mc-jupiter.png" alt="Mc Jupiter" loading="lazy" /></figure>
+    <div class="mission-copy" data-group-words>
+      <h2>OUR MISSION</h2>
+      <p>At The Bolos Universal Company™, our ambition is simple: own a fraction of absolutely everything.</p>
+      <p>We believe no market, institution, idea, asset or unnecessary product should remain beyond the reach of a sufficiently determined organisation.</p>
+      <p>Our mission is therefore to pursue the most ambitious acquisition strategy ever attempted: a Hostile Takeover of Absurdity.</p>
+      <p>Not by eliminating it, but by identifying, consolidating and scaling its most promising assets.</p>
+      <p>From politics to media, finance, industry, culture and everyday life, we continuously expand our footprint wherever complexity can be repackaged, monetised or transformed into shareholder disvalue.</p>
+      <p>Because absurdity is not a side effect of the system.<br />It is the system. And we intend to own it.</p>
+    </div>
+    <div class="guide-copy" data-group-words>
+      <h2>OUR GUIDE : MC JUPITER</h2>
+      <p>reFounder. President Directeur Général.</p>
+      <p>Architect of the Greatest Startup Nation™, pioneer of Complex Thinking™ and undisputed master of his own verticality, MC Jupiter has dedicated his extraordinary career to transforming Ze France into a leaner, more agile and significantly more self-confident organisation.</p>
+      <p>From investment banking to the Élysée, his remarkable journey has been defined by an exceptional ability to identify the right direction — generally from above — and explain it to those who had failed to understand it.</p>
+      <p>Under his visionary leadership, disruption became a method, Ruissellement became quantum, and modesty became an unnecessary legacy cost.</p>
+      <p>A leader of this magnitude comes along only once a century.<br />If we remain optimistic.</p>
+    </div>
+  </section>
+
+  <section class="management" aria-labelledby="management-title">
+    <h2 id="management-title" data-group-reveal>OUR MANAGEMENT &amp; GOVERNANCE</h2>
+    <div class="management-columns">
+      {[exco, board].map((people, lane) => (
+        <div class="management-lane">
+          {people.map((person, index) => (
+            <article class:list={['management-card', { reverse: index % 2 === lane }]} data-group-reveal>
+              <figure><img src={imagePath(person.image, person.shared)} alt={person.name} loading="lazy" /></figure>
+              <div data-group-words><h3>{person.name}</h3><p class="management-role"><em>{person.role}</em></p><p>{person.text}</p></div>
+            </article>
+          ))}
+          <div class="management-cta" aria-hidden="true">{lane === 0 ? 'SEE THE FULL EXCO →' : 'SEE THE FULL BOARD →'}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="group-gap group-gap--divider" aria-hidden="true"></div>
+
+  <section class="business-model" data-group-reveal>
+    <div data-group-words>
+      <h2>OUR BUSINESS MODEL</h2>
+      <p>Our business model is built on a simple principle: turn the unessential into the indispensable.</p>
+      <p>We identify needs that do not exist, develop premium solutions nobody asked for, and deploy sufficient storytelling to make both appear inevitable.</p>
+      <p>Each new disruption creates its own market, its own ecosystem and, whenever possible, its own public funding.</p>
+      <p>We call this Scaling Absurdity™.</p>
+      <p>Because a sustainable business does not simply respond to demand.<br />It manufactures it.</p>
+    </div>
+    <figure><img src="/images/group/business-model.png" alt="Mc Jupiter presenting the Mystery Premium Box" loading="lazy" /><span>SEE BUSINESSES &amp; MAISONS →</span></figure>
+  </section>
+
+  <div class="group-gap group-gap--divider" aria-hidden="true"></div>
+
+  <section class="conduct" aria-labelledby="conduct-title" data-conduct-root>
+    <div class="conduct-intro" data-group-reveal data-group-words>
+      <h2 id="conduct-title">CODE OF CONDUCT</h2>
+      <p>At The Bolos Universal Company™, we do not believe values should be written by consultants. They should be demonstrated by those who live them.</p>
+      <p>Rather than defining how our people should think, we prefer to let some of our most distinguished talents express our principles in their own words.</p>
+    </div>
+    <blockquote class="conduct-quote" aria-live="polite" aria-hidden="true"><p></p><footer><strong></strong><em></em></footer></blockquote>
+    <div class="conduct-grid">
+      {conduct.map(person => (
+        <button class="conduct-person" type="button" data-conduct-key={person.key} data-quote={person.quote} data-name={person.name} data-role={person.role} aria-pressed="false">
+          <span class="conduct-media"><img class="conduct-portrait" src={`/images/group/${person.portrait}`} alt={person.name} loading="lazy" /><img class="conduct-dossier" src={`/images/group/${person.dossier}`} alt={`${person.name} dossier`} loading="lazy" /></span>
+          <span class="conduct-name">{person.name}</span>
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <div class="group-gap group-gap--organigramme" aria-hidden="true"></div>
+  <section class="organigramme" data-group-reveal aria-labelledby="organigramme-title">
+    <h2 id="organigramme-title">ORGANIGRAMME</h2>
+    <div class="organigramme-media"><img src="/images/group/organigramme.gif" alt="The Bolos Universal Company organisation chart" loading="lazy" /></div>
+  </section>
+</main>
+
+<script>
+  const root = document.querySelector<HTMLElement>('.group-page');
+  if (root) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const splitWords = (element: HTMLElement) => {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      const nodes: Text[] = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode as Text);
+      let index = 0;
+      nodes.forEach(node => {
+        if (node.parentElement?.closest('.conduct-quote')) return;
+        const fragment = document.createDocumentFragment();
+        node.data.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) fragment.append(part);
+          else { const span = document.createElement('span'); span.className = 'group-word'; span.style.setProperty('--word-index', String(index++)); span.textContent = part; fragment.append(span); }
+        });
+        node.replaceWith(fragment);
+      });
+    };
+    root.querySelectorAll<HTMLElement>('[data-group-words]').forEach(splitWords);
+    const reveals = root.querySelectorAll<HTMLElement>('[data-group-reveal]');
+    if (reduced || !('IntersectionObserver' in window)) reveals.forEach(item => item.classList.add('is-visible'));
+    else {
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+      reveals.forEach(item => observer.observe(item));
+    }
+    const hero = root.querySelector<HTMLElement>('[data-group-parallax]');
+    if (hero && !reduced) {
+      let queued = false;
+      const update = () => { const frame = hero.parentElement!.getBoundingClientRect(); const progress = Math.max(-1, Math.min(1, -frame.top / Math.max(frame.height, 1))); hero.style.setProperty('--group-parallax', `${progress * 56}px`); queued = false; };
+      const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+      update(); window.addEventListener('scroll', request, { passive: true });
+    }
+    const conductRoot = root.querySelector<HTMLElement>('[data-conduct-root]');
+    if (conductRoot) {
+      const people = [...conductRoot.querySelectorAll<HTMLButtonElement>('[data-conduct-key]')];
+      const quote = conductRoot.querySelector<HTMLElement>('.conduct-quote')!;
+      const quoteText = quote.querySelector<HTMLElement>('p')!;
+      const quoteName = quote.querySelector<HTMLElement>('strong')!;
+      const quoteRole = quote.querySelector<HTMLElement>('em')!;
+      const activate = (person: HTMLButtonElement) => {
+        people.forEach(item => { const active = item === person; item.classList.toggle('is-active', active); item.setAttribute('aria-pressed', String(active)); });
+        quoteText.replaceChildren(...(person.dataset.quote || '').split(/(\s+)/).map((part, index) => { if (/^\s+$/.test(part)) return document.createTextNode(part); const span = document.createElement('span'); span.className = 'quote-word'; span.style.setProperty('--quote-index', String(index)); span.textContent = part; return span; }));
+        quoteName.textContent = person.dataset.name || ''; quoteRole.textContent = person.dataset.role || '';
+        quote.setAttribute('aria-hidden', 'false'); quote.classList.remove('is-visible'); requestAnimationFrame(() => quote.classList.add('is-visible'));
+      };
+      const clear = () => { people.forEach(item => { item.classList.remove('is-active'); item.setAttribute('aria-pressed', 'false'); }); quote.classList.remove('is-visible'); quote.setAttribute('aria-hidden', 'true'); };
+      people.forEach(person => { person.addEventListener('mouseenter', () => activate(person)); person.addEventListener('focus', () => activate(person)); person.addEventListener('click', () => activate(person)); });
+      conductRoot.querySelector('.conduct-grid')?.addEventListener('mouseleave', () => { if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) clear(); });
+    }
+  }
+</script>

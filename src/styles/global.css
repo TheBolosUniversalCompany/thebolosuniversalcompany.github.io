@@ -1,0 +1,87 @@
+/* Fichiers officiels Google Fonts hébergés localement ; licence dans le même dossier.
+   La famille est disponible partout, sans changer la police des pages existantes. */
+@font-face {
+  font-family: 'Bellota Text';
+  src: url('/fonts/bellota-text/BellotaText-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bellota Text';
+  src: url('/fonts/bellota-text/BellotaText-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root { --font-corporate: 'Bellota Text', Arial, sans-serif; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #202020;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+a { color: inherit; }
+a:focus-visible { outline: 2px solid #202020; outline-offset: 5px; }
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 32px;
+  padding: 24px;
+}
+
+.logo { font-weight: 700; text-decoration: none; }
+.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.navigation a, .language-switcher a { text-decoration: none; }
+a:hover, a[aria-current='page'] { text-decoration: underline; text-underline-offset: 4px; }
+.language-switcher { display: flex; gap: 8px; }
+
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 65vh;
+  padding: 64px 24px;
+  background: #dedede;
+  overflow: hidden;
+}
+.hero h1 {
+  position: relative;
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+/* Un voile permet de lire le titre sur l'image commune aux deux langues. */
+.hero-home::after { content: ''; position: absolute; inset: 0; background: rgb(0 0 0 / 40%); }
+.hero-home h1 { z-index: 1; color: #fff; }
+
+@media (max-width: 600px) {
+  .site-header { padding: 20px 16px; }
+  .site-header > nav:first-of-type { width: 100%; }
+}

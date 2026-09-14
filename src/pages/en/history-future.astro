@@ -1,0 +1,21 @@
+---
+import SlimHeader from '../../components/SlimHeader.astro';
+import Footer from '../../components/Footer.astro';
+import HistoryFuturePage from '../../components/HistoryFuturePage.astro';
+import '../../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>History &amp; Future | The Bolos Universal Company™</title>
+    <link rel="alternate" hreflang="en" href="/en/history-future" />
+    <link rel="alternate" hreflang="fr" href="/fr/histoire-avenir" />
+  </head>
+  <body class="history-future-page">
+    <SlimHeader lang="en" pageKey="historyFuture" />
+    <HistoryFuturePage />
+    <Footer lang="en" />
+  </body>
+</html>

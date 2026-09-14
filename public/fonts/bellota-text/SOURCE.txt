@@ -1,0 +1,11 @@
+Bellota Text — Kemie Guaida / The Bellota Project Authors
+Source officielle : https://github.com/google/fonts/tree/main/ofl/bellotatext
+
+Fichiers téléchargés le 4 septembre 2026 :
+https://raw.githubusercontent.com/google/fonts/main/ofl/bellotatext/BellotaText-Regular.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/bellotatext/BellotaText-Bold.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/bellotatext/OFL.txt
+
+Graisses utilisées : Regular 400 et Bold 700, style normal.
+Licence SIL Open Font License 1.1 : voir OFL.txt.
+Ces fichiers sont servis localement. Aucun appel à Google Fonts par le navigateur.

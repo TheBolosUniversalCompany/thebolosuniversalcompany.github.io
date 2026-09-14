@@ -1,0 +1,168 @@
+---
+import '../styles/careers.css';
+
+// A future locale supplies this same copy shape, without duplicating the layout.
+const english = {
+  title: 'CAREERS', tagline: ['Some companies are always hiring.', 'We are not some companies.'],
+  introTitle: 'EXCEPTIONAL PEOPLE. EXCEPTIONAL CAREERS.',
+  intro: ['At The Bolos Universal Company™, we believe our people are our greatest asset.', 'That is why we carefully selected them years ago and have absolutely no intention of replacing them.'],
+  opportunities: 'CURRENT OPPORTUNITIES', availability: ['There are currently no positions available', 'across The Bolos Universal Company™.'],
+  revealLabel: 'Discover more about working with us', internshipTitle: 'STILL WANT TO WORK WITH US?',
+  internshipLead: ['Ambition is admirable.', 'Realism is essential.'],
+  internship: 'Discover Bolos Internship™, our unique pay-to-work program designed for talents who understand that careers must start somewhere. Preferably at their own expense.',
+  internshipCta: 'DISCOVER BOLOS INTERNSHIP™ →',
+  applications: 'UNSOLICITED APPLICATIONS',
+  applicationCopy: ['Still convinced you belong here?', 'You may submit an unsolicited application to our Executive Talent Committee.', 'Please note that doing so suggests an extraordinary level of confidence in your own abilities.'],
+  tryLuck: 'TRY YOUR LUCK →', sure: 'ARE YOU REALLY SURE?',
+  yes: "YES, I REALLY THINK I'M THAT SPECIAL →", no: "NO, YOU'RE RIGHT. I OVERESTIMATED MYSELF →",
+  fine: 'FINE. SHOW ME THE INTERNSHIP →',
+  heroAlt: 'Bolos colleagues playing table football in the executive offices',
+  opportunitiesAlt: 'An empty executive office overlooking Paris',
+  applicationsAlt: 'An application waiting before the Executive Talent Committee boardroom',
+};
+interface Props { copy?: typeof english; internshipUrl?: string; }
+const { copy = english, internshipUrl } = Astro.props;
+---
+<main class="careers-content">
+  <section class="careers-hero" aria-labelledby="careers-title">
+    <img class="careers-hero-image" src="/images/careers/magnific_change-the-weather-so-it-_nV8TFtvYQD.png" alt={copy.heroAlt} width="2688" height="1520" fetchpriority="high" />
+    <div class="careers-logo" aria-hidden="true"><img src="/images/brand/bolos.svg" alt="" width="1920" height="1080" /></div>
+    <div class="careers-hero-title"><h1 id="careers-title">{copy.title}</h1><p>{copy.tagline.map(line => <span class="careers-line">{line}</span>)}</p></div>
+  </section>
+  <section class="careers-intro" aria-labelledby="careers-values">
+    <h2 id="careers-values">{copy.introTitle}</h2>
+    {copy.intro.map(line => <p>{line}</p>)}
+  </section>
+  <section class="careers-image-block careers-opportunities" aria-labelledby="opportunities-title">
+    <img class="careers-block-image" src="/images/careers/Bureau jupiter.png" alt={copy.opportunitiesAlt} width="3840" height="2160" loading="lazy" />
+    <button class="careers-block-trigger" type="button" aria-label={copy.revealLabel} aria-expanded="false" aria-controls="careers-internship"></button>
+    <div class="careers-panel careers-availability">
+      <h2 id="opportunities-title">{copy.opportunities}</h2><p class="careers-zero">0</p>
+      <p>{copy.availability.map(line => <span class="careers-line">{line}</span>)}</p>
+    </div>
+    <div class="careers-internship" id="careers-internship">
+      <div class="careers-internship-copy" aria-hidden="true" inert>
+      <h3 data-careers-words>{copy.internshipTitle}</h3>
+      <p data-careers-words>{copy.internshipLead.map(line => <span class="careers-line">{line}</span>)}</p>
+      <p data-careers-words>{copy.internship}</p>
+      </div>
+      {internshipUrl ? <a class="careers-cta" href={internshipUrl}>{copy.internshipCta}</a> : <button class="careers-cta" type="button">{copy.internshipCta}</button>}
+    </div>
+  </section>
+  <section class="careers-image-block careers-applications" aria-labelledby="applications-title">
+    <img class="careers-block-image" src="/images/careers/ChatGPT Image 8 sept. 2026, 11_27_42.png" alt={copy.applicationsAlt} width="1672" height="940" loading="lazy" />
+    <div class="careers-application-left">
+      <div class="careers-panel careers-application-copy"><h2 id="applications-title">{copy.applications}</h2>{copy.applicationCopy.map(line => <p>{line}</p>)}</div>
+      <button class="careers-cta careers-try" type="button" aria-pressed="false">{copy.tryLuck}</button>
+    </div>
+    <div class="careers-panel careers-decision" aria-hidden="true" inert>
+      <h3 data-careers-words>{copy.sure}</h3>
+      <button class="careers-joke" data-careers-words type="button" data-yes={copy.yes} data-no={copy.no} aria-live="polite">{copy.yes}</button>
+      <button class="careers-fine" data-careers-words type="button">{copy.fine}</button>
+    </div>
+  </section>
+  <div class="careers-final-gap" aria-hidden="true"></div>
+</main>
+
+<script>
+  const page = document.querySelector<HTMLElement>('.careers-content');
+  if (page) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const opportunities = page.querySelector<HTMLElement>('.careers-opportunities')!;
+    const trigger = page.querySelector<HTMLButtonElement>('.careers-block-trigger')!;
+    const internship = page.querySelector<HTMLElement>('.careers-internship')!;
+    // Bound the whole stagger to 820ms, regardless of the eventual locale's word count.
+    const prepareWords = (container: HTMLElement) => {
+    container.querySelectorAll('.careers-word').forEach(word => word.replaceWith(document.createTextNode(word.textContent || '')));
+    const words: HTMLElement[] = [];
+    container.querySelectorAll<HTMLElement>('[data-careers-words]').forEach(block => {
+      const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+      const nodes: Text[] = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode as Text);
+      nodes.forEach(node => {
+        const fragment = document.createDocumentFragment();
+        (node.textContent || '').split(/(\s+)/).forEach(part => {
+          if (!part.trim()) fragment.append(document.createTextNode(part));
+          else {
+            const span = document.createElement('span');
+            span.className = 'careers-word'; span.textContent = part;
+            words.push(span); fragment.append(span);
+          }
+        });
+        node.replaceWith(fragment);
+      });
+    });
+    words.forEach((word, index) => word.style.setProperty('--word-delay', `${index * 360 / Math.max(1, words.length - 1)}ms`));
+    };
+    const internshipCopy = page.querySelector<HTMLElement>('.careers-internship-copy')!;
+    const setReveal = (block: HTMLElement, content: HTMLElement, open: boolean) => {
+      block.classList.toggle('is-open', open);
+      content.setAttribute('aria-hidden', String(!open));
+      content.inert = !open;
+      content.classList.remove('is-revealed');
+      if (open) {
+        prepareWords(content);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (block.classList.contains('is-open')) content.classList.add('is-revealed');
+        }));
+      }
+    };
+    const setOpportunities = (open: boolean) => {
+      trigger.setAttribute('aria-expanded', String(open));
+      setReveal(opportunities, internshipCopy, open);
+    };
+    opportunities.addEventListener('click', (event) => {
+      if ((event.target as Element).closest('a[href]')) return;
+      setOpportunities(!opportunities.classList.contains('is-open'));
+    });
+    opportunities.addEventListener('mouseleave', () => setOpportunities(false));
+    const applications = page.querySelector<HTMLElement>('.careers-applications')!;
+    const decision = page.querySelector<HTMLElement>('.careers-decision')!;
+    const tryLuck = page.querySelector<HTMLButtonElement>('.careers-try')!;
+    const joke = page.querySelector<HTMLButtonElement>('.careers-joke')!;
+    let jokeTimer: ReturnType<typeof setTimeout> | undefined;
+    const setJoke = (active: boolean) => { joke.textContent = active ? joke.dataset.no! : joke.dataset.yes!; joke.classList.toggle('is-no', active); };
+    const setApplications = (open: boolean) => {
+      clearTimeout(jokeTimer); setJoke(false);
+      tryLuck.setAttribute('aria-pressed', String(open));
+      setReveal(applications, decision, open);
+    };
+    tryLuck.addEventListener('click', (event) => { event.stopPropagation(); setApplications(!applications.classList.contains('is-open')); });
+    applications.addEventListener('click', (event) => {
+      if ((event.target as Element).closest('button, a')) return;
+      if (applications.classList.contains('is-open')) setApplications(false);
+    });
+    applications.addEventListener('mouseleave', (event) => {
+      // Child transitions and hit-test changes inside the full image are not exits.
+      if (event.relatedTarget instanceof Node && applications.contains(event.relatedTarget)) return;
+      const bounds = applications.getBoundingClientRect();
+      if (event.relatedTarget !== null && event.clientX >= bounds.left && event.clientX < bounds.right && event.clientY >= bounds.top && event.clientY < bounds.bottom) return;
+      setApplications(false);
+    });
+    joke.addEventListener('mouseenter', () => { if (matchMedia('(hover: hover)').matches) setJoke(true); });
+    joke.addEventListener('mouseleave', () => { clearTimeout(jokeTimer); setJoke(false); });
+    joke.addEventListener('blur', () => { clearTimeout(jokeTimer); setJoke(false); });
+    joke.addEventListener('click', () => {
+      clearTimeout(jokeTimer); setJoke(true);
+      jokeTimer = setTimeout(() => setJoke(false), 1800);
+    });
+    page.querySelector('.careers-fine')!.addEventListener('click', () => {
+      setOpportunities(true);
+      internship.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'center' });
+    });
+    const hero = page.querySelector<HTMLElement>('.careers-hero')!;
+    const heroImage = page.querySelector<HTMLElement>('.careers-hero-image')!;
+    let queued = false;
+    const updateParallax = () => {
+      queued = false;
+      const bounds = hero.getBoundingClientRect();
+      const offset = reducedMotion.matches ? 0 : Math.min(Math.max(-bounds.top, 0) * .08, bounds.height * .045);
+      heroImage.style.setProperty('--careers-parallax', `${offset}px`);
+    };
+    const requestParallax = () => { if (!queued) { queued = true; requestAnimationFrame(updateParallax); } };
+    window.addEventListener('scroll', requestParallax, { passive: true });
+    window.addEventListener('resize', requestParallax);
+    reducedMotion.addEventListener('change', requestParallax);
+    updateParallax();
+  }
+</script>

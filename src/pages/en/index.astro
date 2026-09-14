@@ -1,0 +1,31 @@
+---
+import BurgerPrototype from '../../components/BurgerPrototype.astro';
+import SlimHeader from '../../components/SlimHeader.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+import '../../styles/home-en.css';
+---
+
+<!-- Le prototype reste intact. L'habillage statique est limité à cette Home. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home | The Bolos Universal Company™</title>
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <link rel="alternate" hreflang="fr" href="/fr/" />
+  </head>
+  <body class="home-en">
+    <SlimHeader lang="en" pageKey="home" />
+    <div class="home-visual" data-logo-tone="light">
+      <BurgerPrototype />
+      <!-- SVG original inchangé. Les marges de sa planche sont compensées en CSS.
+           Ce logo est décoratif, jamais un lien. data-logo-tone prépare le noir. -->
+      <div class="home-bolos-logo" aria-hidden="true">
+        <img src="/images/brand/bolos.svg" alt="" width="1920" height="1080" />
+      </div>
+    </div>
+    <Footer lang="en" />
+  </body>
+</html>

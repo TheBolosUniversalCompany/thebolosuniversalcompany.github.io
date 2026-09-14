@@ -1,0 +1,135 @@
+---
+import { pages, type Language } from '../data/pages';
+import BackToTop from './BackToTop.astro';
+interface Props { lang: Language; }
+const { lang } = Astro.props;
+// FOOTER GLOBAL — référence FOOTER.pdf. Ajouter href pour activer un futur lien.
+type Item = { label: string; href?: string };
+const text = {
+  en: {
+    newsletters: 'Newsletters', follow: 'Follow Us', signup: 'SIGN UP', close: 'CLOSE',
+    groups: [
+      { title: 'Candidates', items: ['Careers', 'Internship™', 'SUD BOLOS™'] },
+      { title: 'Investors', items: ['Investors', 'BolosCoin™ The 49.3 Club™'] },
+      { title: 'Press', items: ['Newsroom', 'Press Contact', 'Press Kit'] },
+      { title: 'The Bolos Group', items: ['Group', 'History & Future', 'Sustainability', 'Code of Conduct'] },
+    ],
+    legal: ['Legal Notice', 'Privacy', 'Accessibility', 'Cookies', 'Credits'],
+    newsletterTitle: 'SORRY. YOU’RE NOT ON THE LIST.',
+    newsletterLines: ['Applications are currently closed.', 'They have always been closed.'],
+    cookieTitle: 'COOKIES', cookieIntro: ['We don’t have any.', 'The Board ate them.'],
+    cookieLines: ['No advertising cookies.', 'No behavioural tracking.', 'No premium surveillance infrastructure.'],
+  },
+  fr: {
+    newsletters: 'Newsletters', follow: 'Suivez-nous', signup: 'S’INSCRIRE', close: 'FERMER',
+    groups: [
+      { title: 'Candidats', items: ['Carrières', 'Stage™', 'SUD BOLOS™'] },
+      { title: 'Investisseurs', items: ['Investisseurs', 'BolosCoin™ Le Club 49.3™'] },
+      { title: 'Presse', items: ['Actualités', 'Contact presse', 'Dossier de presse'] },
+      { title: 'Le Groupe Bolos', items: ['Groupe', 'Histoire et avenir', 'Développement durable', 'Code de conduite'] },
+    ],
+    legal: ['Mentions légales', 'Confidentialité', 'Accessibilité', 'Cookies', 'Crédits'],
+    newsletterTitle: 'DÉSOLÉ. VOUS N’ÊTES PAS SUR LA LISTE.',
+    newsletterLines: ['Les candidatures sont actuellement fermées.', 'Elles l’ont toujours été.'],
+    cookieTitle: 'COOKIES', cookieIntro: ['Nous n’en avons pas.', 'Le Conseil les a mangés.'],
+    cookieLines: ['Aucun cookie publicitaire.', 'Aucun suivi comportemental.', 'Aucune infrastructure de surveillance premium.'],
+  },
+}[lang];
+const groups = text.groups.map(group => ({ ...group, items: group.items.map((item: string | Item): Item => typeof item === 'string' ? { label: item } : item) }));
+---
+
+<div class="footer-shell" data-bolos-footer>
+  <BackToTop lang={lang} />
+  <footer class="bolos-footer">
+    <div class="copyrights" data-open="false">
+      <button class="copyrights-toggle" type="button" aria-expanded="false" aria-controls={`copyrights-${lang}`}>COPYRIGHTS <span class="copyrights-symbol" aria-hidden="true">+</span></button>
+      <div class="copyrights-reveal" id={`copyrights-${lang}`} aria-hidden="true"><div><p>@tagrandmère!</p></div></div>
+    </div>
+    <div class="footer-top footer-grid">
+      <section><h2>{text.newsletters}</h2><button class="signup" type="button" data-modal="newsletter" aria-haspopup="dialog">{text.signup}</button></section>
+      <section><h2>{text.follow}</h2></section>
+    </div>
+    <div class="footer-groups footer-grid">
+      {groups.map(group => <section><h2>{group.title}</h2><ul>{group.items.map(item => <li>{item.href ? <a href={item.href}>{item.label}</a> : <span>{item.label}</span>}</li>)}</ul></section>)}
+    </div>
+    <div class="footer-bottom">
+      <ul class="footer-legal">
+        <li><a href={pages.legalNotice[lang].path}>{text.legal[0]}</a></li>
+        <li><span>{text.legal[1]}</span></li>
+        <li><span>{text.legal[2]}</span></li>
+        <li><button type="button" data-modal="cookies" aria-haspopup="dialog">{text.legal[3]}</button></li>
+        <li><span>{text.legal[4]}</span></li>
+      </ul>
+      <p class="footer-copyright">© THE BOLOS UNIVERSAL COMPANY™</p>
+    </div>
+  </footer>
+  <dialog class="footer-modal" data-dialog="newsletter" aria-labelledby={`newsletter-title-${lang}`}>
+    <div class="modal-body"><h2 id={`newsletter-title-${lang}`}>{text.newsletterTitle}</h2><p>{text.newsletterLines.map(line => <span>{line}</span>)}</p><button type="button" data-close autofocus>{text.close}</button></div>
+  </dialog>
+  <dialog class="footer-modal" data-dialog="cookies" aria-labelledby={`cookies-title-${lang}`}>
+    <div class="modal-body"><h2 id={`cookies-title-${lang}`}>{text.cookieTitle}</h2><p>{text.cookieIntro.map(line => <span>{line}</span>)}</p><p>{text.cookieLines.map(line => <span>{line}</span>)}</p><button type="button" data-close autofocus>{text.close}</button></div>
+  </dialog>
+</div>
+
+<style>
+  /* Styles autonomes, sans effet sur le Hero ni le burger. */
+  .footer-shell { background: #d9d9d9; padding: clamp(64px, 20.6vw, 396px) 3.64% clamp(32px, 4.73vw, 91px) 4.83%; font-family: var(--font-corporate, 'Bellota Text', Arial, sans-serif); }
+  .bolos-footer { --footer-ease: cubic-bezier(.22, .61, .36, 1); background: #06082b; color: #fff; padding: 0 clamp(24px, 2.55vw, 49px); font-size: clamp(14px, 1.04vw, 20px); font-weight: 400; letter-spacing: .1em; line-height: 1.5; }
+  .footer-shell *, .footer-shell *::before, .footer-shell *::after { box-sizing: border-box; }
+  .bolos-footer button { color: inherit; font: inherit; letter-spacing: inherit; border: 0; background: none; padding: 0; text-align: left; cursor: pointer; }
+  .bolos-footer a { color: inherit; text-decoration: none; }
+  .bolos-footer a:hover, .bolos-footer button:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .footer-shell button:focus-visible, .footer-shell a:focus-visible { outline: 1px solid currentColor; outline-offset: 6px; }
+  .copyrights { padding-top: clamp(24px, 2.28vw, 44px); padding-bottom: 14px; border-bottom: 1px solid #777885; text-align: right; }
+  .bolos-footer .copyrights-toggle { font-size: clamp(10px, .625vw, 12px); }
+  .copyrights-symbol { display: inline-block; margin-left: 12px; transform: rotate(0); transition: transform 600ms var(--footer-ease); }
+  .copyrights[data-open='true'] .copyrights-symbol { transform: rotate(45deg); transition-duration: 800ms; }
+  .copyrights-reveal { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 600ms var(--footer-ease), opacity 160ms ease-out; }
+  .copyrights-reveal > div { min-height: 0; overflow: hidden; }
+  .copyrights-reveal p { font-size: 11px; margin: 10px 0 6px; letter-spacing: .04em; }
+  .copyrights[data-open='true'] .copyrights-reveal { grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows 800ms var(--footer-ease), opacity 650ms ease-out; }
+  .footer-grid { display: grid; grid-template-columns: .95fr 1fr 1fr 1fr; gap: 24px; }
+  .bolos-footer h2 { font-size: inherit; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin: 0; }
+  .footer-top { padding: clamp(30px, 2.8vw, 54px) 0; border-bottom: 1px solid #777885; }
+  .bolos-footer .signup { margin-top: clamp(20px, 1.8vw, 35px); }
+  .footer-groups { padding-top: clamp(28px, 2.1vw, 40px); }
+  .footer-groups ul { list-style: none; padding: 0; margin: clamp(20px, 1.7vw, 33px) 0 0; }
+  .footer-groups li { margin-bottom: clamp(18px, 1.8vw, 35px); max-width: 245px; }
+  .footer-groups li:last-child { margin-bottom: 0; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: clamp(70px, 7.8vw, 150px) 0 clamp(24px, 1.45vw, 28px); }
+  .footer-legal { display: flex; flex-wrap: wrap; gap: clamp(22px, 3.3vw, 64px); list-style: none; padding: 0; margin: 0; font-weight: 700; }
+  .footer-copyright { font-size: clamp(9px, .625vw, 12px); margin: 0; white-space: nowrap; letter-spacing: .07em; }
+  .footer-modal { width: min(540px, calc(100% - 40px)); max-height: calc(100svh - 48px); overflow-y: auto; padding: 0; border: 1px solid #bbb; background: #f9f8f5; color: #06082b; box-shadow: 0 24px 90px #0004; font-family: var(--font-corporate); }
+  .footer-modal::backdrop { background: rgb(6 8 43 / 65%); }
+  .modal-body { padding: clamp(28px, 4vw, 56px); }
+  .modal-body h2 { font-size: 23px; line-height: 1.4; letter-spacing: .08em; margin: 0 0 28px; }
+  .modal-body p { font-size: 16px; line-height: 1.75; margin: 0 0 22px; }
+  .modal-body p span { display: block; }
+  .modal-body button { margin-top: 16px; padding: 12px 24px; font: inherit; font-size: 12px; letter-spacing: .14em; color: inherit; background: none; border: 1px solid currentColor; cursor: pointer; }
+  @media (max-width: 1000px) { .footer-bottom { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 650px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; } .footer-shell { padding-left: 16px; padding-right: 16px; } .bolos-footer { padding-inline: 22px; } .footer-legal { gap: 18px 24px; } }
+  @media (prefers-reduced-motion: reduce) { .copyrights-symbol, .copyrights-reveal, .copyrights[data-open='true'] .copyrights-symbol, .copyrights[data-open='true'] .copyrights-reveal { transition-duration: 1ms; } }
+</style>
+
+<script>
+  // Interactions locales : aucun formulaire, cookie, stockage ni requête réseau.
+  document.querySelectorAll<HTMLElement>('[data-bolos-footer]').forEach(footer => {
+    const copyrights = footer.querySelector<HTMLElement>('.copyrights')!;
+    const toggle = footer.querySelector<HTMLButtonElement>('.copyrights-toggle')!;
+    const reveal = footer.querySelector<HTMLElement>('.copyrights-reveal')!;
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      copyrights.dataset.open = String(open);
+      toggle.setAttribute('aria-expanded', String(open));
+      reveal.setAttribute('aria-hidden', String(!open));
+    });
+    footer.querySelectorAll<HTMLButtonElement>('[data-modal]').forEach(button => {
+      const dialog = footer.querySelector<HTMLDialogElement>(`[data-dialog="${button.dataset.modal}"]`)!;
+      button.addEventListener('click', () => dialog.showModal());
+      dialog.querySelector<HTMLButtonElement>('[data-close]')!.addEventListener('click', () => dialog.close());
+      // Échap ferme le dialogue natif sans déclencher le raccourci du burger.
+      dialog.addEventListener('keydown', event => { if (event.key === 'Escape') event.stopPropagation(); });
+      dialog.addEventListener('close', () => button.focus());
+    });
+  });
+</script>

@@ -1,0 +1,94 @@
+---
+import '../styles/investors.css';
+const english = {
+  title: '2026 FIRST HALF RESULTS', access: 'ACCESS INFORMATION',
+  heroAlt: 'Bolos first half results presentation before an audience of shareholders',
+  figures: [['65,168,546', 'Stories'], ['+49', 'Maisons'], ['+68 million', 'Stagiaires'], ['+49,3 bn €', 'Official valuation'], ['+653 M €', 'Official loss']],
+  chapters: [
+    { title: 'BOLOSCOIN™', catchline: 'Own a fraction of absolutely everything.', cta: 'DISCOVER BOLOSCOIN™', heading: 'BolosCoin™', paragraphs: ['The future of shareholder ownership.\nOne coin.\nOfficial valuation: €49.3 billion.\nMarket valuation: subject to reality.'], alt: 'BolosCoin displayed in a monumental marble hall' },
+    { title: 'SHAREHOLDERS CLUB', catchline: 'Give us absolutely everything. Get nothing', cta: 'BECOME PRIVILEGED', heading: 'THE 49.3 CLUB™', paragraphs: ['Where ownership becomes belonging.\nReserved for our most committed shareholders,', 'The 49.3 Club™ offers privileged access to the people, places and decisions shaping the future of the Group.'], alt: 'Shareholders in yellow Bolos waistcoats at a reception' },
+    { title: 'SHAREHOLDER IDIOCRACY CLUB', catchline: 'Your voice matters. Not your vote.', cta: 'REGISTER YOUR VOICE', heading: 'THE CHORAL CLUB™', paragraphs: ["Every shareholder is invited to participate in the Group’s major decisions and contribute to its long-term direction.", 'Your voice is essential to the Choral.', 'Especially when it sings in tune with the Board.'], alt: 'The illuminated Bolos opera house at night' },
+  ],
+};
+interface Props { copy?: typeof english; }
+const { copy = english } = Astro.props;
+const images = ['boloscoin', 'shareholders', 'idiocracy'];
+---
+<main class="investors-content">
+  <section class="investors-hero" aria-labelledby="investors-title">
+    <img class="investors-hero-image" src="/images/investors/hero.png" alt={copy.heroAlt} width="2688" height="1520" fetchpriority="high" />
+    <div class="investors-logo" aria-hidden="true"><img src="/images/brand/bolos.svg" alt="" width="1920" height="1080" /></div>
+    <div class="investors-hero-title"><h1 id="investors-title">{copy.title}</h1><p>{copy.access}</p></div>
+  </section>
+  <dl class="investors-figures">{copy.figures.map(([value, label]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+  {copy.chapters.map((chapter, index) => (
+    <section class="investors-chapter" aria-labelledby={`investors-chapter-${index}`}>
+      <img class="investors-chapter-image" src={`/images/investors/${images[index]}.png`} alt={chapter.alt} loading="lazy" />
+      <button class="investors-toggle" type="button" aria-label={chapter.title} aria-expanded="false" aria-controls={`investors-detail-${index}`}></button>
+      <div class="investors-catchline"><h2 id={`investors-chapter-${index}`}>{chapter.title}</h2><p>{chapter.catchline}</p></div>
+      <div class="investors-chapter-right">
+        <div class="investors-detail" id={`investors-detail-${index}`} aria-hidden="true" inert>
+          <h3 data-investors-words>{chapter.heading}</h3>
+          {chapter.paragraphs.map(paragraph => <p data-investors-words>{paragraph.split('\n').map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>)}
+        </div>
+        <span class="investors-cta">{chapter.cta}</span>
+      </div>
+    </section>
+  ))}
+  <div class="investors-final-gap" aria-hidden="true"></div>
+</main>
+<script>
+  const page = document.querySelector<HTMLElement>('.investors-content');
+  if (page) {
+    page.querySelectorAll<HTMLElement>('.investors-chapter').forEach(chapter => {
+      const detail = chapter.querySelector<HTMLElement>('.investors-detail')!;
+      const toggle = chapter.querySelector<HTMLButtonElement>('.investors-toggle')!;
+      const words: HTMLElement[] = [];
+      detail.querySelectorAll('[data-investors-words]').forEach(block => {
+        const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+        const nodes: Text[] = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode as Text);
+        nodes.forEach(node => {
+          const fragment = document.createDocumentFragment();
+          (node.textContent || '').split(/(\s+)/).forEach(part => {
+            if (!part.trim()) fragment.append(document.createTextNode(part));
+            else {
+              const span = document.createElement('span');
+              span.className = 'investors-word'; span.textContent = part;
+              words.push(span); fragment.append(span);
+            }
+          });
+          node.replaceWith(fragment);
+        });
+      });
+      words.forEach((word, i) => word.style.setProperty('--word-delay', `${i * 360 / Math.max(1, words.length - 1)}ms`));
+      chapter.addEventListener('click', () => {
+        const open = !chapter.classList.contains('is-open');
+        chapter.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        detail.setAttribute('aria-hidden', String(!open));
+        detail.inert = !open;
+        detail.classList.remove('is-revealed');
+        if (open) requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (chapter.classList.contains('is-open')) detail.classList.add('is-revealed');
+        }));
+      });
+    });
+    // Same restrained parallax values as the validated Careers hero.
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const hero = page.querySelector<HTMLElement>('.investors-hero')!;
+    const heroImage = page.querySelector<HTMLElement>('.investors-hero-image')!;
+    let queued = false;
+    const updateParallax = () => {
+      queued = false;
+      const bounds = hero.getBoundingClientRect();
+      const offset = reducedMotion.matches ? 0 : Math.min(Math.max(-bounds.top, 0) * .08, bounds.height * .045);
+      heroImage.style.setProperty('--investors-parallax', `${offset}px`);
+    };
+    const requestParallax = () => { if (!queued) { queued = true; requestAnimationFrame(updateParallax); } };
+    window.addEventListener('scroll', requestParallax, { passive: true });
+    window.addEventListener('resize', requestParallax);
+    reducedMotion.addEventListener('change', requestParallax);
+    updateParallax();
+  }
+</script>

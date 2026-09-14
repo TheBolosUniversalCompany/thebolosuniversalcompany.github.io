@@ -1,0 +1,64 @@
+/* Habillage STATIQUE de /en/ uniquement.
+   BurgerPrototype.astro, ses panneaux, son script et ses transitions restent intacts. */
+body.home-en:has(#burger-prototype) {
+  background: #d9d9d9;
+  font-family: var(--font-corporate);
+}
+
+/* Le slim header complet remplace visuellement la barre minimale du test. */
+.home-en #burger-prototype > .topbar { display: none; }
+
+.home-en .home-visual {
+  position: relative;
+  isolation: isolate;
+  /* La maquette commence à x=4 sur une planche de 1924 px. */
+  margin-left: 0.208%;
+}
+
+.home-en #burger-prototype .scene {
+  /* PAGE 01 A : environ 1920 × 1080, et non la hauteur de la fenêtre. */
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  border-radius: clamp(28px, 3.125vw, 60px);
+}
+
+.home-en #burger-prototype .headquarters {
+  /* Image 1672 × 941 conservée à sa résolution d'origine.
+     Le PDF la place à 1929 × 1085.64 derrière son cadre de 1920 × 1080. */
+  width: 100.46875%;
+  height: 100.5222%;
+  max-width: none;
+  object-fit: cover;
+  object-position: left top;
+}
+
+.home-en .home-bolos-logo {
+  position: absolute;
+  top: 2.6%;
+  right: 2.1%;
+  width: clamp(76px, 5.6vw, 108px);
+  aspect-ratio: 558.41 / 327.39;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.home-en .home-bolos-logo img {
+  /* Le tracé occupe x=670.30, y=316.57, 558.41 × 327.39 dans le SVG 1920 × 1080.
+     On masque uniquement le vide autour, sans retoucher le fichier ni le dessin. */
+  position: absolute;
+  width: 343.834%;
+  max-width: none;
+  height: auto;
+  left: -120.04%;
+  top: -96.69%;
+  filter: invert(1);
+}
+
+/* Le SVG contient aussi des aplats blancs : ces modes conservent les contreformes.
+   À l'avenir : data-logo-tone="dark" sur home-visual pour un fond clair. */
+.home-en .home-visual[data-logo-tone='dark'] .home-bolos-logo { mix-blend-mode: multiply; }
+.home-en .home-visual[data-logo-tone='dark'] .home-bolos-logo img { filter: none; }

@@ -1,0 +1,23 @@
+---
+import BusinessPage from '../../components/BusinessPage.astro';
+import Footer from '../../components/Footer.astro';
+import SlimHeader from '../../components/SlimHeader.astro';
+import '../../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The seven Business Units and 29 Maisons of The Bolos Universal Company." />
+    <title>Our Businesses &amp; Maisons | The Bolos Universal Company™</title>
+    <link rel="alternate" hreflang="en" href="/en/businesses" />
+    <link rel="alternate" hreflang="fr" href="/fr/activites" />
+  </head>
+  <body class="business-route">
+    <SlimHeader lang="en" pageKey="businesses" />
+    <BusinessPage lang="en" />
+    <Footer lang="en" />
+  </body>
+</html>

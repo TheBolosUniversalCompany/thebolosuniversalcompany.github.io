@@ -1,0 +1,50 @@
+---
+import { pages, type Language, type PageKey } from '../data/pages';
+
+interface Props { lang: Language; pageKey?: PageKey; }
+const { lang, pageKey = 'home' } = Astro.props;
+const labels = {
+  en: { accessibility: 'Accessibility', investors: 'Investors', press: 'Press', suppliers: 'Suppliers', candidates: 'Candidate Portal', language: 'Language' },
+  fr: { accessibility: 'Accessibilité', investors: 'Investisseurs', press: 'Presse', suppliers: 'Fournisseurs', candidates: 'Espace candidats', language: 'Langue' },
+};
+const text = labels[lang];
+---
+
+<header class="slim-header">
+  <div class="slim-identity">
+    <a class="slim-wordmark" href={pages.home[lang].path}>THE BOLOS UNIVERSAL COMPANY™</a>
+    <span>{text.accessibility}</span>
+  </div>
+  <ul class="slim-corporate">
+    <!-- Valeur statique exacte de PAGE 01 A/B.pdf ; aucun cours en temps réel. -->
+    <li class="slim-stock">Bolos Ltd - 49.3Mds</li>
+    <li>{text.investors}</li>
+    <li>{text.press}</li>
+    <li>{text.suppliers}</li>
+    <li>{text.candidates}</li>
+  </ul>
+  <nav class="slim-language" aria-label={text.language}>
+    <a href={pages[pageKey].en.path} lang="en" hreflang="en" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+    <span aria-hidden="true">/</span>
+    <a href={pages[pageKey].fr.path} lang="fr" hreflang="fr" aria-current={lang === 'fr' ? 'page' : undefined}>FR</a>
+    <span class="slim-chevron" aria-hidden="true">⌄</span>
+  </nav>
+</header>
+
+<style>
+  .slim-header { display: flex; align-items: center; gap: clamp(12px, 2vw, 38px); min-height: 16px; padding: 1px 16px 2px; background: #fff; color: #767676; font-family: var(--font-corporate); font-size: 9px; line-height: 1.2; white-space: nowrap; }
+  .slim-identity { display: flex; align-items: center; gap: 16px; margin-right: auto; }
+  .slim-wordmark { font-weight: 700; color: #111; }
+  .slim-corporate { display: flex; align-items: center; gap: clamp(16px, 2.1vw, 40px); list-style: none; margin: 0; padding: 0; text-transform: uppercase; }
+  .slim-stock { text-transform: none; font-variant-numeric: tabular-nums; }
+  .slim-language { display: flex; gap: 4px; align-items: center; }
+  .slim-header a { text-decoration: none; }
+  .slim-header a:hover { text-decoration: underline; }
+  .slim-language a[aria-current='page'] { color: #111; }
+  .slim-chevron { margin-left: 2px; }
+  @media (max-width: 1000px) {
+    .slim-header { flex-wrap: wrap; gap: 6px 16px; padding: 5px 12px; }
+    .slim-identity { width: calc(100% - 70px); }
+    .slim-corporate { order: 3; width: 100%; flex-wrap: wrap; gap: 8px 20px; }
+  }
+</style>

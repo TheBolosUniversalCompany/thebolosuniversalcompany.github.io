@@ -1,0 +1,33 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { pages, translations, type Language, type PageKey } from '../data/pages';
+import '../styles/global.css';
+
+interface Props { lang: Language; pageKey: PageKey; contentOnly?: boolean; }
+const { lang, pageKey, contentOnly = false } = Astro.props;
+const page = pages[pageKey][lang];
+const isHome = pageKey === 'home';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{page.title} | The Bolos Universal Company™</title>
+    <link rel="alternate" hreflang="en" href={pages[pageKey].en.path} />
+    <link rel="alternate" hreflang="fr" href={pages[pageKey].fr.path} />
+  </head>
+  <body>
+    <Header lang={lang} pageKey={pageKey} />
+    <main>
+      {!contentOnly && <section class:list={['hero', { 'hero-home': isHome }]} aria-labelledby="page-title">
+        {isHome && <img class="hero-image" src="/images/home/hero-headquarters.png" alt={translations[lang].headquarters} fetchpriority="high" />}
+        <h1 id="page-title">{page.title}</h1>
+      </section>}
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+import { pages, type Language } from '../data/pages';
+interface Props { lang: Language; }
+const { lang } = Astro.props;
+const paragraphs = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim, erat non auctor sollicitudin, lorem lectus malesuada nibh, vitae interdum arcu justo sed ipsum. Nullam vulputate, sapien at tincidunt sollicitudin, neque arcu tincidunt est, eu dictum orci ipsum sit amet neque.',
+  'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Duis consequat neque ac felis placerat, ac facilisis neque malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae. Praesent vitae lacus sit amet justo finibus efficitur.',
+  'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Curabitur condimentum, ipsum a sollicitudin tincidunt, neque velit pellentesque augue, vitae ultricies dolor lorem in massa. Donec in magna sed neque dignissim sollicitudin.',
+];
+---
+<article class="legal-document">
+  <h1>{pages.legalNotice[lang].title}</h1>
+  {paragraphs.map((paragraph, index) => <section aria-labelledby={`article-${index + 1}`}><h2 id={`article-${index + 1}`}>ARTICLE {index + 1}</h2><p>{paragraph}</p></section>)}
+  <div class="legal-closing">
+    <p class="legal-statement">{lang === 'en' ? "WE DON'T GIVE A FUCK ABOUT WHO YOU ARE." : "ON S'EN BAS LES COUILLES DE QUI T'ES."}</p>
+    <p>{lang === 'en' ? 'Now get back to work, you little nobody.' : 'Maintenant, retourne à ton poste, stagiaire insignifiant.'}</p>
+  </div>
+</article>
+<style>
+  .legal-document { width: min(920px, calc(100% - 48px)); margin: 90px auto 100px; color: #171925; font-family: var(--font-corporate); }
+  .legal-document h1 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: clamp(46px, 6vw, 80px); line-height: 1.1; margin: 0 0 80px; padding-bottom: 36px; border-bottom: 1px solid #b6b6bc; }
+  .legal-document section { margin: 0 0 48px; }
+  .legal-document h2 { font-size: 14px; font-weight: 700; letter-spacing: .18em; margin: 0 0 20px; }
+  .legal-document p { font-size: 17px; line-height: 1.95; margin: 0; }
+  .legal-closing { border-top: 1px solid #b6b6bc; margin-top: 64px; padding-top: 36px; }
+  .legal-document .legal-statement { font-weight: 700; letter-spacing: .06em; margin-bottom: 14px; }
+</style>

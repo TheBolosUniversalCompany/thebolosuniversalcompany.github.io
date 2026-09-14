@@ -1,0 +1,23 @@
+---
+import { pages, translations, type Language, type PageKey } from '../data/pages';
+
+interface Props { lang: Language; pageKey: PageKey; }
+const { lang, pageKey } = Astro.props;
+const currentPage = pages[pageKey];
+---
+
+<header class="site-header">
+  <a class="logo" href={pages.home[lang].path}>THE BOLOS UNIVERSAL COMPANY™</a>
+  <nav aria-label={translations[lang].navigation}>
+    <ul class="navigation">
+      {Object.entries(pages).filter(([key]) => key !== 'legalNotice').map(([key, page]) => (
+        <li><a href={page[lang].path} aria-current={key === pageKey ? 'page' : undefined}>{page[lang].title}</a></li>
+      ))}
+    </ul>
+  </nav>
+  <nav class="language-switcher" aria-label={translations[lang].language}>
+    <a href={currentPage.en.path} lang="en" hreflang="en" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+    <span aria-hidden="true">/</span>
+    <a href={currentPage.fr.path} lang="fr" hreflang="fr" aria-current={lang === 'fr' ? 'page' : undefined}>FR</a>
+  </nav>
+</header>

@@ -1,0 +1,512 @@
+---
+import '../styles/sustainability.css';
+
+const plantLayers = [
+  { file: 'plant-pot.png', className: 'plant-pot', alt: 'Bolos plant pot', down: .14, up: .04 },
+  { file: 'plant-stem-lower.png', className: 'plant-stem-lower', alt: 'Lower stem', down: .125, up: .048 },
+  { file: 'plant-leaf-lower-left.png', className: 'plant-leaf-lower-left', alt: 'Lower left leaf', commitment: '04', down: .108, up: .058 },
+  { file: 'plant-leaf-lower-right.png', className: 'plant-leaf-lower-right', alt: 'Lower right leaf', commitment: '05', down: .104, up: .061 },
+  { file: 'plant-stem-middle.png', className: 'plant-stem-middle', alt: 'Middle stem', down: .09, up: .07 },
+  { file: 'plant-leaf-upper-left.png', className: 'plant-leaf-upper-left', alt: 'Upper left leaf', commitment: '02', down: .072, up: .09 },
+  { file: 'plant-leaf-upper-right.png', className: 'plant-leaf-upper-right', alt: 'Upper right leaf', commitment: '03', down: .069, up: .094 },
+  { file: 'plant-stem-upper.png', className: 'plant-stem-upper', alt: 'Upper stem', down: .056, up: .11 },
+  { file: 'plant-flower.png', className: 'plant-flower', alt: 'Flower', commitment: '01', down: .043, up: .14 },
+];
+
+const commitments = [
+  { number: '01', title: 'Creative Greenwashing™', text: 'Turning environmental challenges into powerful brand opportunities.', className: 'commitment-one', down: .039, up: .132, expanded: ['When environmental progress proves difficult, communication remains scalable.', 'We transform complex impacts into clear commitments, measurable narratives and increasingly sustainable perceptions.'] },
+  { number: '02', title: 'Biodiversity & Premium Selection', text: 'Preserving what matters most to our value chain.', className: 'commitment-two', down: .066, up: .084, expanded: ['We protect biodiversity wherever it creates the greatest strategic value.', 'Priority is given to species, ecosystems and landscapes considered essential to our operations, reputation or executive retreats.'] },
+  { number: '03', title: 'Responsible Warming™', text: 'Reducing the emissions that appear in our own reporting.', className: 'commitment-three', down: .064, up: .086, expanded: ['Our climate strategy focuses on the emissions we can most efficiently reduce, relocate or reclassify.', 'Because every tonne removed from our reporting brings us closer to our targets.'] },
+  { number: '04', title: 'Selective Opacity', text: 'Knowing more. Sharing less.', className: 'commitment-four', down: .1, up: .054, expanded: ['Transparency begins with knowing what to disclose.', 'We continuously improve traceability across our value chain while ensuring sensitive environmental complexity remains appropriately contextualised.'] },
+  { number: '05', title: 'Stakeholder Engagement & Impact Externalisation™', text: 'Accelerating progress together, across our ecosystem.', className: 'commitment-five', down: .098, up: .056, expanded: ['Sustainability is a collective responsibility.', 'By working closely with suppliers, communities and future generations, we ensure environmental efforts — and their associated costs — are shared across our entire ecosystem.'] },
+];
+
+const progress = [
+  ['−49.3 %', 'DIRECT CO₂ EMISSIONS', 'By progressively transferring carbon-intensive activities to our suppliers.'],
+  ['100 %', 'RESPONSIBLY SOURCED PLASTIC', 'Our artificial plants now contain absolutely no endangered botanical species.'],
+  ['+340 %', 'BIODIVERSITY PROTECTED', 'Following the strategic reclassification of “biodiversity” to include decorative plants, corporate lawns and selected golf courses.'],
+  ['92 %', 'ENVIRONMENTAL TRACEABILITY', 'We know exactly where most of our impact comes from. We simply see no strategic reason to tell you.'],
+  ['€0', 'ENVIRONMENTAL EXTERNALITIES', 'All remaining environmental costs are successfully carried by suppliers, local communities, future generations or the planet.'],
+];
+
+const initiativeArticles = [
+  {
+    key: 'rafalenadaire',
+    title: 'RAFALENADAIRE™',
+    subtitle: 'High-Speed Aerial Climate Response System.',
+    previewSubtitle: 'High-Speed Aerial Climate Response system.',
+    previewText: 'As wildfires intensify, RAFALENADAIRE™ delivers water faster than ever — addressing climate change without unnecessarily addressing its causes.',
+    image: 'initiative-rafalenadaire-article.png',
+    previewImage: 'initiative-rafalenadaire.png',
+    alt: 'RAFALENADAIRE aerial climate response system',
+    paragraphs: [
+      { text: 'Climate change is accelerating faster than expected. Global action, unfortunately, is not.' },
+      { text: 'At The Bolos Universal Company™, we refuse to let institutional inertia slow down our environmental ambition.' },
+      { text: 'If the world cannot reduce global warming fast enough, we believe the responsible alternative is to respond to its consequences significantly faster.' },
+      { text: 'Developed by Bolos Advanced R&D™, RAFALENADAIRE™ combines military-grade speed with aerial firefighting capabilities, delivering water to climate-affected areas at unprecedented velocity.' },
+      { text: 'Rather than waiting for structural change, international coordination or meaningful reductions in emissions, our engineers focused on the one variable we could reliably improve: speed.', emphasis: 'speed.' },
+      { text: 'RAFALENADAIRE™ embodies our unique approach to climate action: move faster, intervene harder and demonstrate that even the smallest contribution can make a difference — provided the hummingbird is travelling at Mach 1.5.' },
+      { text: 'The Bolos Universal Company™ is proud to contribute its share to the global climate effort.' },
+      { text: 'We cannot, however, be held responsible for the size of that share, its overall effectiveness, or the underlying problem itself.' },
+    ],
+  },
+  {
+    key: 'ice-cube',
+    title: 'ICE CUBE CLIMATE ADAPTATION PROGRAM™',
+    subtitle: 'Bringing freshness where it matters.',
+    previewSubtitle: 'Targeted Cooling Solutions.',
+    previewText: 'As temperatures rise, our program delivers cooling where it matters most — protecting high-value individuals from the most inconvenient effects of climate change.',
+    image: 'initiative-ice-cube-article.png',
+    previewImage: 'initiative-ice-cube.png',
+    alt: 'ICE CUBE climate adaptation programme',
+    paragraphs: [
+      { text: 'Global temperatures are rising. Unfortunately, cooling the entire planet remains technically complex, financially inefficient and unnecessarily inclusive.' },
+      { text: 'The Bolos Universal Company™ has therefore adopted a more targeted approach.' },
+      { text: 'Rather than attempting to reduce temperatures everywhere, our Ice Cube Climate Adaptation Program™ identifies individuals and strategic assets for whom excessive heat represents the greatest potential disruption.' },
+      { text: 'Through locally deployed swimming pools, high-density ice distribution and precision refreshment solutions, the program creates temporary climate-resilient environments exactly where they generate the highest stakeholder value.' },
+      { text: 'This approach dramatically reduces the geographical scope of our climate ambitions while allowing the Group to demonstrate immediate and measurable results.' },
+      { text: 'Because climate adaptation does not necessarily require cooling eight billion people.' },
+      { text: 'Sometimes, you simply need to identify the right ones, to keep everyone cool.' },
+    ],
+  },
+  {
+    key: 'intern-power',
+    title: 'INTERN-POWERED INFRASTRUCTURE™',
+    subtitle: 'Human energy. Finally renewable.',
+    previewSubtitle: 'Human Renewable Energy.',
+    previewText: 'Our interns convert untapped human potential into clean electricity — reducing both carbon emissions and unnecessary payroll dependency.',
+    image: 'initiative-intern-power-article.png',
+    previewImage: 'initiative-intern-power.png',
+    alt: 'Interns producing renewable power',
+    paragraphs: [
+      { text: 'The energy transition requires new sources of power. At The Bolos Universal Company™, we believe some of the most promising resources are already sitting inside our buildings.' },
+      { text: 'Through Intern-Powered Infrastructure™, selected workstations are connected to high-efficiency indoor bicycles, allowing interns to generate electricity while performing their usual responsibilities.' },
+      { text: 'The principle is simple: the faster they pedal, the more renewable energy enters our offices.' },
+      { text: 'Developed by Bolos Energy™, the system creates a uniquely virtuous cycle: lower carbon emissions, lower energy costs and healthier interns. Regular pedalling supports cardiovascular health, improves physical resilience and transforms previously unproductive body movement into measurable environmental performance.' },
+      { text: 'Unlike solar and wind power, human energy is available day and night, regardless of weather conditions — subject only to motivation, exhaustion and applicable labour regulations.' },
+      { text: 'Our long-term ambition is to progressively extend the program across the Group and achieve a fully circular human-energy ecosystem where every calorie burned becomes a watt earned.' },
+      { text: 'Because the workforce has always powered the company. We simply connected it to the grid.' },
+    ],
+  },
+  {
+    key: 'zero-water',
+    title: 'ZERO-WATER HEADQUARTERS™',
+    subtitle: 'Less water wasted today. More water for tomorrow’s innovation.',
+    previewSubtitle: 'Every drop counts. Some more than others.',
+    previewText: 'Our headquarters achieved a spectacular reduction in direct water consumption by removing running water entirely.',
+    image: 'initiative-zero-water-article.png',
+    previewImage: 'initiative-zero-water.png',
+    alt: 'Bolos bottled water',
+    paragraphs: [
+      { text: 'As our revolutionary AI-powered Absurdity programme continues to scale, we recognise that digital innovation requires significant water resources.' },
+      { text: 'Rather than slowing innovation, our Greenwashing Department identified a more ambitious opportunity: save water elsewhere.' },
+      { text: 'Running water, drinking fountains and other legacy hydration infrastructure have therefore been removed from our headquarters, generating immediate and measurable reductions in direct water consumption.' },
+      { text: 'To support employees throughout this transition, premium bottled water is now conveniently available through paid vending machines across our offices.' },
+      { text: 'The result is a truly win-win model: more water available for AI, better water attributed to our workplace, and a new revenue stream supporting our environmental ambitions.' },
+      { text: 'Everyone can now contribute to building a better world.' },
+      { text: 'One bottle at a time.' },
+    ],
+  },
+  {
+    key: 'accounting-mobility',
+    title: 'ACCOUNTING MOBILITY TRANSITION™',
+    subtitle: 'The road to sustainability starts with personal responsibility.',
+    previewSubtitle: 'Strategic Emission Reallocation.',
+    previewText: 'As our AI ambitions expand, every tonne of CO₂ counts. Our Accounting Department is helping preserve valuable carbon headroom — one unreimbursed litre at a time.',
+    image: 'initiative-accounting-mobility-detail.png',
+    previewImage: 'initiative-accounting-mobility.png',
+    alt: 'Employees filling an Accounting Department car with vegetable oil',
+    paragraphs: [
+      { text: 'As our revolutionary AI-powered Absurdity programme continues to scale, so does the energy required to power it.' },
+      { text: 'Rather than compromising innovation, reducing computational capacity or — worse — using fewer prompts, our Greenwashing Department identified significant carbon-saving potential elsewhere within the Group.' },
+      { text: 'The Accounting Department’s Clio dCi.' },
+      { text: 'As part of our ambitious CO₂ reduction strategy, its corporate fuel card has therefore been permanently withdrawn.' },
+      { text: 'To support the transition, employees now have access to a dedicated cupboard stocked with bottles of vegetable oil, providing an experimental bio-sourced alternative whenever technically, mechanically or spiritually appropriate.' },
+      { text: 'The Clio itself remains fully operational.' },
+      { text: 'Employees wishing to continue using conventional diesel are naturally free to do so at their own expense, in accordance with their individual environmental convictions.' },
+      { text: 'This simple measure allows the Group to reduce both fuel expenditure and attributable carbon emissions, preserving valuable environmental headroom for our rapidly expanding AI infrastructure.' },
+      { text: 'Less diesel on our balance sheet. More prompts for the future.' },
+    ],
+  },
+];
+---
+
+<main class="sustainability-page">
+  <section class="sustainability-hero" aria-labelledby="sustainability-title">
+    <img class="sustainability-hero-image" data-sustainability-parallax src="/images/sustainability/hero-greenwash-office.png" alt="Sardine Ruisseau watering an artificial plant in the Greenwash Zone" fetchpriority="high" />
+    <div class="sustainability-logo" aria-hidden="true"><img src="/images/brand/bolos.svg" alt="" width="1920" height="1080" /></div>
+    <span class="hero-arrow hero-arrow-left" aria-hidden="true">←</span><span class="hero-arrow hero-arrow-right" aria-hidden="true">→</span>
+    <div class="sustainability-hero-title"><h1 id="sustainability-title">SUSTAINABILITY &amp; GREENWASHING</h1><p>Making tomorrow super green.</p></div>
+  </section>
+
+  <section class="environmental-commitment" data-sustainability-reveal aria-labelledby="environmental-title">
+    <h2 id="environmental-title">OUR ENVIRONMENTAL COMMITMENT</h2>
+    <p>At The Bolos Universal Company™, we recognise that luxury, growth and premium consumption rely on an extraordinary concentration of resources<br />to serve an exceptionally selective happy fews.</p>
+    <p>As environmental expectations evolve, we also recognise that our impact is no longer simply an environmental challenge.</p>
+    <p>It is a reputational asset requiring careful management.</p>
+    <p>Our strategy is therefore focused on continuously improving the visibility of our environmental performance<br />while ensuring that operational constraints are allocated across the value chain where they can be managed most efficiently.</p>
+    <p>Through supplier engagement, responsible sourcing, strategic compensation, selective traceability and increasingly sophisticated reporting,<br />we work to externalise environmental complexity while internalising environmental progress.</p>
+    <p>Every improvement achieved across our ecosystem represents an opportunity to strengthen the Group’s positive contribution,<br />reinforce stakeholder confidence and demonstrate our leadership in the transition — regardless of where that improvement actually occurred.</p>
+    <p>To coordinate this ambition, we created GREENWASHING 360 ABSURDITY™ — Bolos Initiatives For the Environment,<br />a Group-wide framework designed to measure our impact, optimise our indicators and ensure that every measurable step forward receives the recognition it deserves.</p>
+    <p>Because sustainability is not about choosing between the planet and performance.</p>
+    <p>It is about ensuring the planet never becomes a material risk to performance.</p>
+  </section>
+
+  <div class="sustainability-gap sustainability-gap-short" aria-hidden="true"></div>
+
+  <section class="greenwashing-department" data-sustainability-reveal>
+    <figure><img src="/images/sustainability/sardine-ruisseau.png" alt="Sardine Ruisseau, Greenwashing Department" loading="lazy" /></figure>
+    <div class="department-copy">
+      <h2>Green Washing department.</h2>
+      <p class="department-lead">Sardine Ruisseau leads the Group’s Greenwashing Department and oversees the deployment of GREENWASHING 360 ABSURDITY™ across our Businesses &amp; Maisons.</p>
+      <p>Her mission is to ensure that every environmental impact is properly identified, measured and transformed into a clear, positive and stakeholder-friendly narrative.</p>
+      <p>Working closely with our suppliers, operational teams and Communication Department, Sardine helps the Group continuously improve its environmental performance — or, whenever improvement proves operationally inconvenient, the way that performance is measured, contextualised and presented.</p>
+      <p>She is particularly committed to responsible sourcing, biodiversity preservation and the progressive externalisation of environmental impacts across increasingly distant tiers of our supply chain.<br />She has repeatedly asked us not to call this sustainability.</p>
+      <p>Her expertise enables The Bolos Universal Company™ to pursue ambitious growth while ensuring that environmental considerations remain fully integrated into our strategy, our reporting and, whenever financially reasonable, our decisions.</p>
+      <p>Sardine remains deeply committed to making the Group part of the solution.</p>
+      <p class="prompt-impact">---&gt; Prompt executed in 1.2547sec / 0.024W/h&nbsp; // 0.0178 Liters</p>
+      <blockquote>“I’m here because the prompt didn’t give any choice. I deeply disagree with this nonesense.”<cite>Sardine R.</cite></blockquote>
+    </div>
+  </section>
+
+  <div class="sustainability-gap sustainability-gap-large" aria-hidden="true"></div>
+
+  <section class="greenwashing-framework" data-framework data-sustainability-reveal aria-labelledby="framework-title">
+    <div class="framework-poster">
+      <img class="framework-background" src="/images/sustainability/plant-background.png" alt="" loading="lazy" />
+      <div class="framework-heading">
+        <p>OUR ENVIRONMENTAL ROADMAP</p>
+        <h2 id="framework-title">GREENWASHING<br />360 ABSURDITY™</h2>
+        <p>FIVE COMMITMENTS. ONE SUSTAINABLE NARRATIVE.</p>
+      </div>
+      <p class="framework-aside framework-aside-left">SAME<br />PLANET.<br />GREATER<br />OPPORTUNITIES.</p>
+      <p class="framework-aside framework-aside-right">SUSTAINABILITY<br />LOOKS GOOD<br />ON US.</p>
+      <div class="plant-assembly" aria-label="Exploded artificial plant assembly">
+        {plantLayers.map((layer, index) => <div
+          class={`plant-piece ${layer.className}`}
+          data-plant-piece
+          data-response-down={layer.down}
+          data-response-up={layer.up}
+          style={`--layer-index:${index}`}
+        >
+          <div class="plant-follow">
+            <div class="plant-interaction">
+              {layer.commitment ? <button
+                class="plant-trigger"
+                type="button"
+                data-plant-trigger={layer.commitment}
+                aria-pressed="false"
+                aria-expanded="false"
+                aria-controls={`commitment-expanded-${layer.commitment}`}
+                aria-label={`Select commitment ${layer.commitment}`}
+              ><img class="plant-layer" src={`/images/sustainability/${layer.file}`} alt="" loading="lazy" /></button> : <span class="plant-static"><img class="plant-layer" src={`/images/sustainability/${layer.file}`} alt={layer.alt} loading="lazy" /></span>}
+            </div>
+          </div>
+        </div>)}
+      </div>
+      {commitments.map((item, index) => <article class={`framework-commitment ${item.className}`} data-commitment={item.number} data-commitment-motion data-response-down={item.down} data-response-up={item.up} style={`--commitment-index:${index}`}>
+        <div class="commitment-follow"><div class="commitment-entry"><div class="commitment-interaction">
+          <div class="commitment-number"><span>{item.number}</span></div>
+          <h3>{item.title}</h3>
+          <p class="commitment-description">{item.text}</p>
+          <div class="commitment-expanded" id={`commitment-expanded-${item.number}`} aria-hidden="true">{item.expanded.map(paragraph => <p>{paragraph}</p>)}</div>
+          <button class="commitment-plus" type="button" data-commitment-control={item.number} aria-expanded="false" aria-controls={`commitment-expanded-${item.number}`} aria-label={`Explore commitment ${item.number}: ${item.title}`}>+</button>
+        </div></div></div>
+      </article>)}
+      <p class="framework-note framework-note-left">LUXURY<br />GROWS<br />DIFFERENTLY<br />HERE.</p>
+      <p class="framework-note framework-note-right">SCROLL<br />TO EXPLORE<br />OUR COMMITMENTS</p>
+    </div>
+  </section>
+
+  <div class="sustainability-gap sustainability-gap-medium" aria-hidden="true"></div>
+
+  <section class="progress-section" data-sustainability-reveal aria-labelledby="progress-title">
+    <h2 id="progress-title">MEASURING OUR PROGRESS</h2>
+    <div class="progress-grid">
+      {progress.map(([value, label, text]) => <article data-sustainability-words><strong>{value}</strong><h3>{label}</h3><p>{text}</p></article>)}
+    </div>
+    <p class="progress-footnote">*When the temperature becomes incompatible with our objectives, we remain committed to improving the measurement environment — including, where appropriate, the thermometer itself.</p>
+  </section>
+
+  <section class="initiatives-section" aria-labelledby="initiatives-title">
+    <h2 id="initiatives-title" data-sustainability-reveal>SELECTED INITIATIVES</h2>
+    <div class="initiatives-board" data-sustainability-reveal data-initiatives-board>
+      <div class="initiative-column initiative-column-left" aria-label="Selected initiatives index">
+        {initiativeArticles.map((item, index) => <button
+          class:list={['initiative-preview', { 'is-selected': item.key === 'accounting-mobility' }]}
+          type="button"
+          data-initiative-trigger={item.key}
+          aria-pressed={item.key === 'accounting-mobility' ? 'true' : 'false'}
+          aria-controls={`initiative-article-${item.key}`}
+          style={`--initiative-index:${index}`}
+        >
+          <img src={`/images/sustainability/${item.previewImage ?? item.image}`} alt={item.alt} loading="lazy" />
+          <span class="initiative-preview-copy"><strong>{item.title}</strong><em>{item.previewSubtitle}</em><span>{item.previewText}</span></span>
+        </button>)}
+      </div>
+      <div class="initiative-column initiative-reader" data-initiative-reader tabindex="-1" aria-live="polite">
+        <div class="initiative-reader-stage">
+          {initiativeArticles.map(item => <article
+            id={`initiative-article-${item.key}`}
+            class:list={['initiative-reader-content', { 'is-active': item.key === 'accounting-mobility' }]}
+            data-initiative-article={item.key}
+            aria-hidden={item.key === 'accounting-mobility' ? 'false' : 'true'}
+          >
+            <h3>{item.title}</h3>
+            <h4>{item.subtitle}</h4>
+            {item.paragraphs.map(paragraph => {
+              if (!paragraph.emphasis) return <p>{paragraph.text}</p>;
+              const emphasisIndex = paragraph.text.indexOf(paragraph.emphasis);
+              return <p>{paragraph.text.slice(0, emphasisIndex)}<em>{paragraph.emphasis}</em>{paragraph.text.slice(emphasisIndex + paragraph.emphasis.length)}</p>;
+            })}
+            <img src={`/images/sustainability/${item.image}`} alt={item.alt} loading="lazy" />
+          </article>)}
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const sustainabilityPage = document.querySelector<HTMLElement>('.sustainability-page');
+  if (sustainabilityPage) {
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    sustainabilityPage.querySelectorAll<HTMLElement>('[data-sustainability-words]').forEach(element => {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      const nodes: Text[] = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode as Text);
+      let wordIndex = 0;
+      nodes.forEach(node => {
+        if (node.parentElement?.closest('.plant-assembly')) return;
+        const fragment = document.createDocumentFragment();
+        node.data.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) fragment.append(part);
+          else {
+            const span = document.createElement('span');
+            span.className = 'sustainability-word';
+            span.style.setProperty('--word-index', String(wordIndex++));
+            span.textContent = part;
+            fragment.append(span);
+          }
+        });
+        node.replaceWith(fragment);
+      });
+    });
+
+    const reveals = sustainabilityPage.querySelectorAll<HTMLElement>('[data-sustainability-reveal]');
+    if (reducedMotion || !('IntersectionObserver' in window)) reveals.forEach(item => item.classList.add('is-visible'));
+    else {
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }), { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+      reveals.forEach(item => observer.observe(item));
+    }
+
+    const heroImage = sustainabilityPage.querySelector<HTMLElement>('[data-sustainability-parallax]');
+    if (heroImage && !reducedMotion) {
+      let queued = false;
+      const update = () => {
+        const frame = heroImage.parentElement!.getBoundingClientRect();
+        const progress = Math.max(-1, Math.min(1, -frame.top / Math.max(frame.height, 1)));
+        heroImage.style.setProperty('--sustainability-parallax', `${progress * 72}px`);
+        queued = false;
+      };
+      const requestUpdate = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+      update();
+      addEventListener('scroll', requestUpdate, { passive: true });
+    }
+
+    const framework = sustainabilityPage.querySelector<HTMLElement>('[data-framework]');
+    const commitmentControls = Array.from(sustainabilityPage.querySelectorAll<HTMLButtonElement>('[data-commitment-control]'));
+    const commitmentBlocks = Array.from(sustainabilityPage.querySelectorAll<HTMLElement>('[data-commitment]'));
+    const plantTriggers = Array.from(sustainabilityPage.querySelectorAll<HTMLButtonElement>('[data-plant-trigger]'));
+    const plantPieces = Array.from(sustainabilityPage.querySelectorAll<HTMLElement>('[data-plant-piece]'));
+    const commitmentMotions = Array.from(sustainabilityPage.querySelectorAll<HTMLElement>('[data-commitment-motion]'));
+    let activeCommitment = '';
+
+    const setCommitment = (number: string) => {
+      activeCommitment = number;
+      plantTriggers.forEach(trigger => {
+        const active = trigger.dataset.plantTrigger === number;
+        trigger.setAttribute('aria-pressed', String(active));
+        trigger.setAttribute('aria-expanded', String(active));
+      });
+      commitmentControls.forEach(control => control.setAttribute('aria-expanded', String(control.dataset.commitmentControl === number)));
+      commitmentBlocks.forEach(block => {
+        const active = block.dataset.commitment === number;
+        block.classList.toggle('is-active', active);
+        block.classList.remove('is-preview');
+        block.querySelector<HTMLElement>('.commitment-expanded')?.setAttribute('aria-hidden', String(!active));
+      });
+    };
+
+    commitmentControls.forEach(control => control.addEventListener('click', () => setCommitment(control.dataset.commitmentControl!)));
+    plantTriggers.forEach(trigger => {
+      const number = trigger.dataset.plantTrigger!;
+      const preview = (visible: boolean) => {
+        const block = commitmentBlocks.find(item => item.dataset.commitment === number);
+        if (block && activeCommitment !== number) block.classList.toggle('is-preview', visible);
+      };
+      trigger.addEventListener('click', () => setCommitment(number));
+      trigger.addEventListener('pointerenter', () => preview(true));
+      trigger.addEventListener('pointerleave', () => preview(false));
+      trigger.addEventListener('focus', () => preview(true));
+      trigger.addEventListener('blur', () => preview(false));
+    });
+
+    if (framework) {
+      const poster = framework.querySelector<HTMLElement>('.framework-poster');
+      const heading = framework.querySelector<HTMLElement>('.framework-heading');
+      const flower = framework.querySelector<HTMLElement>('.plant-flower');
+      const commitmentOne = framework.querySelector<HTMLElement>('[data-commitment="01"]');
+      const mappedCommitments = [
+        { number: '01', piece: '.plant-flower', anchor: .28 },
+        { number: '03', piece: '.plant-leaf-upper-right', anchor: .35 },
+        { number: '05', piece: '.plant-leaf-lower-right', anchor: .40 },
+      ];
+
+      const alignMappedCommitments = () => {
+        if (!poster) return;
+        mappedCommitments.forEach(({ number, piece, anchor }) => {
+          const plantPiece = framework.querySelector<HTMLElement>(piece);
+          const commitment = framework.querySelector<HTMLElement>(`[data-commitment="${number}"]`);
+          if (!plantPiece || !commitment) return;
+          const mappedTop = plantPiece.offsetTop + plantPiece.offsetWidth * anchor;
+          commitment.style.setProperty('--commitment-mapped-top', `${mappedTop}px`);
+        });
+      };
+
+      alignMappedCommitments();
+      addEventListener('resize', alignMappedCommitments, { passive: true });
+
+      if (reducedMotion) framework.classList.add('is-assembled');
+      else {
+        let assemblyTimer = 0;
+        const scheduleAssembly = () => {
+          if (!framework.classList.contains('is-visible') || assemblyTimer) return;
+          assemblyTimer = window.setTimeout(() => framework.classList.add('is-assembled'), 2900);
+        };
+        scheduleAssembly();
+        const classObserver = new MutationObserver(scheduleAssembly);
+        classObserver.observe(framework, { attributes: true, attributeFilter: ['class'] });
+
+        const motionStates = [
+          ...plantPieces.map(element => ({ element, property: '--plant-motion-y' })),
+          ...commitmentMotions.map(element => ({ element, property: '--commitment-motion-y' })),
+        ].map(state => ({
+          ...state,
+          current: 0,
+          responseDown: Number(state.element.dataset.responseDown ?? .075),
+          responseUp: Number(state.element.dataset.responseUp ?? .075),
+        }));
+        let targetPosition = 0;
+        let previousTarget = 0;
+        let direction: 'down' | 'up' = 'up';
+        let motionFrame = 0;
+        let previousFrameTime = 0;
+
+        const getTargetPosition = () => {
+          const bounds = framework.getBoundingClientRect();
+          const posterHeight = poster?.clientHeight ?? bounds.height;
+          const courseRatio = innerWidth <= 560 ? .18 : innerWidth <= 900 ? .21 : .24;
+          const responsiveCourse = Math.min(posterHeight * courseRatio, innerHeight * .72);
+          const headingBottom = heading ? heading.offsetTop + heading.offsetHeight : 0;
+          const flowerVisibleTop = flower
+            ? flower.offsetTop + flower.offsetWidth * (73 / 350)
+            : posterHeight;
+          const firstTextTop = commitmentOne?.offsetTop ?? posterHeight;
+          const breathingRoom = Math.max((heading?.offsetHeight ?? 0) * .18, posterHeight * .028);
+          const protectedCourse = Math.max(0, Math.min(flowerVisibleTop, firstTextTop) - headingBottom - breathingRoom);
+          const course = Math.min(responsiveCourse, protectedCourse);
+          const scrollableDistance = Math.max(bounds.height - innerHeight, 1);
+          const progress = Math.max(0, Math.min(1, -bounds.top / scrollableDistance));
+          return -course * (1 - progress);
+        };
+
+        const animatePlantMotion = (time: number) => {
+          const elapsed = previousFrameTime ? Math.min((time - previousFrameTime) / 16.667, 2.5) : 1;
+          previousFrameTime = time;
+          let stillMoving = false;
+          motionStates.forEach(state => {
+            const response = direction === 'down' ? state.responseDown : state.responseUp;
+            const blend = 1 - Math.pow(1 - response, elapsed);
+            state.current += (targetPosition - state.current) * blend;
+            if (Math.abs(targetPosition - state.current) > .08) stillMoving = true;
+            else state.current = targetPosition;
+            state.element.style.setProperty(state.property, `${state.current.toFixed(2)}px`);
+          });
+          if (stillMoving) motionFrame = requestAnimationFrame(animatePlantMotion);
+          else {
+            motionFrame = 0;
+            previousFrameTime = 0;
+          }
+        };
+
+        targetPosition = getTargetPosition();
+        previousTarget = targetPosition;
+        motionStates.forEach(state => {
+          state.current = targetPosition;
+          state.element.style.setProperty(state.property, `${targetPosition.toFixed(2)}px`);
+        });
+
+        const updatePlantTarget = () => {
+          const nextTarget = getTargetPosition();
+          if (Math.abs(nextTarget - previousTarget) > .05) direction = nextTarget < previousTarget ? 'up' : 'down';
+          targetPosition = nextTarget;
+          previousTarget = nextTarget;
+          if (!motionFrame) motionFrame = requestAnimationFrame(animatePlantMotion);
+        };
+
+        addEventListener('scroll', updatePlantTarget, { passive: true });
+        addEventListener('resize', updatePlantTarget, { passive: true });
+      }
+    }
+
+    const initiativesBoard = sustainabilityPage.querySelector<HTMLElement>('[data-initiatives-board]');
+    const initiativeReader = sustainabilityPage.querySelector<HTMLElement>('[data-initiative-reader]');
+    const initiativeTriggers = Array.from(sustainabilityPage.querySelectorAll<HTMLButtonElement>('[data-initiative-trigger]'));
+    const initiativeArticles = Array.from(sustainabilityPage.querySelectorAll<HTMLElement>('[data-initiative-article]'));
+    const desktopPointer = matchMedia('(hover: hover) and (pointer: fine)');
+    const mobileLayout = matchMedia('(max-width: 900px)');
+    let selectedInitiative = 'accounting-mobility';
+    let switchTimer = 0;
+
+    const showInitiative = (key: string, commit = false) => {
+      if (!initiativeArticles.some(article => article.dataset.initiativeArticle === key)) return;
+      if (commit) selectedInitiative = key;
+      initiativeTriggers.forEach(trigger => {
+        const selected = trigger.dataset.initiativeTrigger === selectedInitiative;
+        trigger.classList.toggle('is-selected', selected);
+        trigger.setAttribute('aria-pressed', String(selected));
+      });
+      initiativeArticles.forEach(article => {
+        const active = article.dataset.initiativeArticle === key;
+        article.classList.toggle('is-active', active);
+        article.setAttribute('aria-hidden', String(!active));
+      });
+      if (initiativesBoard && !reducedMotion) {
+        initiativesBoard.classList.remove('is-switching');
+        requestAnimationFrame(() => initiativesBoard.classList.add('is-switching'));
+        clearTimeout(switchTimer);
+        switchTimer = window.setTimeout(() => initiativesBoard.classList.remove('is-switching'), 520);
+      }
+    };
+
+    initiativeTriggers.forEach(trigger => {
+      const key = trigger.dataset.initiativeTrigger!;
+      trigger.addEventListener('click', () => {
+        showInitiative(key, true);
+        if (mobileLayout.matches) initiativeReader?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      });
+      trigger.addEventListener('mouseenter', () => { if (desktopPointer.matches) showInitiative(key); });
+      trigger.addEventListener('mouseleave', () => { if (desktopPointer.matches) showInitiative(selectedInitiative); });
+      trigger.addEventListener('focus', () => { if (desktopPointer.matches) showInitiative(key); });
+      trigger.addEventListener('blur', () => requestAnimationFrame(() => {
+        if (desktopPointer.matches && !initiativeTriggers.includes(document.activeElement as HTMLButtonElement)) showInitiative(selectedInitiative);
+      }));
+    });
+  }
+</script>

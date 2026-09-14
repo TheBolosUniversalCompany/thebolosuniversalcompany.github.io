@@ -1,0 +1,717 @@
+---
+// Contenus finaux des onze états du burger. Les transitions restent pilotées
+// par les trois panneaux existants et par le script local en bas du composant.
+const sections = [
+  { key: 'group', first: 'The Bolos Group', second: 'Corporation', panel: true },
+  { key: 'businesses', first: 'Our Businesses', second: '& Maisons', panel: true },
+  { key: 'sustainability', first: 'Our Sustainability', second: 'vision', panel: true },
+  { key: 'history', first: 'Our History', second: '& Future', panel: true },
+  { key: 'investors', first: 'Investors', second: '', href: '/en/investors' },
+  { key: 'careers', first: 'Careers', second: '', href: '/en/careers' },
+  { key: 'newsroom', first: 'Newsroom', second: '', href: '/en/newsroom' },
+];
+
+const sectionOverviews = [
+  {
+    key: 'group', title: 'The Bolos Universal Company', href: '/en/group',
+    paragraphs: [
+      'The Bolos Universal Company™ brings together exceptional talents, questionable ambitions and strategically unprofitable businesses under one shared vision.',
+      'Since 2017, we have been scaling absurdity to create sustainable shareholder disvalue.',
+    ],
+    links: ['OUR MISSION', 'MANAGEMENT & GOVERNANCE', 'OUR BUSINESS MODEL', 'CODE OF CONDUCT', 'ECONOMIC IMPACT', 'OUR ORGANIZATION'],
+  },
+  {
+    key: 'sustainability', title: 'The Vision', href: '/en/sustainability',
+    paragraphs: [
+      'As a leading disruptive global corporation, The Bolos Universal Company™ has a clear consciousness of its mission: to civilize its consumers and share with them its greater wisdom. As it was always meant to be, from day one of the Greatest Startup Nation.',
+      'Because civilization doesn’t come from demand. It comes from the right offer.',
+    ],
+    links: ['OUR SUSTAINABILITY VISION', 'FOR THE PLANET', 'FOR THE PEOPLE', 'ETHICS & COMPLIANCE', 'RESPONSIBLE RUISSELLEMENT™'],
+  },
+  {
+    key: 'history', title: 'The Heritage', href: '/en/history-future',
+    paragraphs: [
+      'For decades, The Bolos Universal Company™ has been shaping history through bold decisions, questionable innovations and an unwavering ability to learn absolutely nothing from the past.',
+      'Because understanding where we come from is essential to ensuring we make the same mistakes again — at a much larger scale.',
+    ],
+    links: ['OUR HISTORY', 'HERITAGE & SAVOIR-FAIRE', 'MILESTONES', 'VISION 2070', 'FUTURE PAST PROJECTS'],
+  },
+];
+
+const businessOverviews = [
+  {
+    key: 'all', label: 'All Businesses & Maisons', title: 'Businesses & Maisons',
+    paragraphs: [
+      'The Bolos Universal Company™ brings together prestigious Businesses & Maisons across strategically unprofitable sectors.',
+      'Each combines excellence, disruption and unrivalled expertise in turning absurdity into shareholder disvalue.',
+    ],
+  },
+  {
+    key: 'kapital', label: 'BOLOS Kapital™', title: 'Bolos Karl Capital',
+    paragraphs: [
+      'Bolos Karl Capital™ deploys others’ capital across real estate, asset management and financial engineering — creating, inventing and capturing value through leverage and opportunistic acquisitions.',
+      'The financial machinery behind The Bolos Universal Company™’s Hostile Takeover of Absurdity.',
+    ],
+  },
+  {
+    key: 'industries', label: 'BOLOS Industries™', title: 'Bolos Industries',
+    paragraphs: [
+      'Bolos Industries™ combines advanced R&D, energy and defense with a globally outsourced industrial model.',
+      'From groundbreaking innovations to everyday unessentials, we engineer anything — and manufacture absolutely nothing.',
+    ],
+  },
+  {
+    key: 'media', label: 'BOLOS Media Group™', title: 'Bolos Media Group',
+    paragraphs: [
+      'Bolos Media Group™ brings together news, entertainment, music, publishing and creative industries across every platform.',
+      'From handcrafted misinformation to premium brainwashing, we shape narratives — and occasionally reality.',
+    ],
+  },
+  {
+    key: 'retail', label: 'BOLOS Retail & Consumer™', title: 'Bolos Retail & Consumer',
+    paragraphs: [
+      'Bolos Retail & Consumer™ turns everyday desires into premium unessentials through luxury goods, retail and frictionless overconsumption.',
+      'From exclusive drops to forgotten treasures, we create demand — we never follow needs.',
+    ],
+  },
+  {
+    key: 'consulting', label: 'BOLOS Consulting™', title: 'Bolos Consulting',
+    paragraphs: [
+      'Bolos Consulting™ brings together complementary approaches to strategy, transformation and executive decision-making.',
+      'From Le Bistrot des Bolos™ to Luiggi’s Alpha Camp™, our Maisons provide executives with the confusion required to make decisions they were already planning to make.',
+    ],
+  },
+  {
+    key: 'education', label: 'BOLOS Education™', title: 'Bolos Education',
+    paragraphs: [
+      'Bolos Education™ is committed to shaping the next generation through innovative learning, early education and public-private excellence.',
+      'From daycare to higher education, we prepare tomorrow’s leaders for challenges nobody asked them to solve.',
+    ],
+  },
+  {
+    key: 'internship', label: 'BOLOS Internship™', title: 'Bolos Internship',
+    paragraphs: [
+      'Bolos Internship™ connects ambitious young talents with world-class opportunities to gain experience, build networks and contribute to the Ruissellement™.',
+      'Our unique pay-to-work model turns the privilege of unpaid work into a premium professional investment service — because opportunity has a price.',
+    ],
+  },
+];
+
+const capitalItems = [
+  ['Bls Real Estate™', 'Property Investment & Premium Gentrification'],
+  ['Bls Asset Management™', 'Wealth Management & Upward Redistribution'],
+  ['BolosCoin™', 'FinTech, Crypto Assets & Unnecessary Tokenisation'],
+  ['Bls Financial Engineering™', 'Tax Structuring & Cross-Border Discretion'],
+  ['Bls Private Equity™', 'Mergers, Acquisitions & Hostile Opportunities'],
+];
+
+const details = [
+  {
+    key: 'group', caption: 'The Board — Leadership without limits. Governance without consequence',
+    image: '/images/burger/corporation-leadership.png', alt: 'The Bolos Universal Company leadership board',
+    body: [
+      'Behind every great company stands a strong leadership team.',
+      'United by a shared vision and occasionally conflicting personal interests, our management combines political expertise, entrepreneurial instinct and an unwavering commitment to making decisions others would hesitate to consider.',
+      'Together, they lead The Bolos Universal Company™ toward its ultimate ambition: the Hostile Takeover of Absurdity.',
+    ],
+  },
+  {
+    key: 'sustainability', caption: 'MC Jupiter presents the A4 CV Edition, infused with La Réussite N°5 — because success begins with the right offer.',
+    image: '/images/burger/sustainability-a4-cv.png', alt: 'MC Jupiter presenting the A4 CV Edition',
+    body: [
+      'Our Supreme CEO Leader MC Jupiter unveils the Group’s latest innovation: premium A4 CV paper infused with La Réussite N°5, the unmistakable scent of success.',
+      'Designed for both ambitious consumers and HR professionals, this groundbreaking technology helps neutralize lingering notes of working class, failure and social determinism — ensuring every candidate makes a truly Bolos first impression.',
+      'Or, at the very least, leaves the HR department smelling pleasantly fresh.',
+    ],
+  },
+  {
+    key: 'history', caption: 'Decades of leadership. Generations of savoir-faire. One continuously rebranded vision.',
+    image: '/images/burger/history-presidents.png', alt: 'Framed portraits from the Bolos leadership heritage',
+    body: [
+      'From Fifth RépublikLab™ to the Greatest Startup Nation™, generations of visionary CEOs have shaped, refined and occasionally rebranded the same enduring business model.',
+      'Today, The Bolos Universal Company™ proudly carries this unique heritage forward — preserving decades of institutional savoir-faire while scaling its mistakes for future generations.',
+    ],
+  },
+  {
+    key: 'all', caption: 'Bls Financial Engineering - The Bolos Karl Capital handcrafted tax-evasion savoir-faire.',
+    image: '/images/burger/business-all.png', alt: 'Bolos Karl Capital financial engineering editorial scene', items: capitalItems,
+  },
+  {
+    key: 'kapital', caption: 'Bls Financial Engineering - The Bolos Karl Capital handcrafted tax-evasion savoir-faire.',
+    image: '/images/burger/business-kapital.png', alt: 'Bolos Karl Capital editorial scene', items: capitalItems,
+  },
+  {
+    key: 'industries', caption: 'GigaFactory 493 — The Bolos Group is proud to announce a fleet of 30 Robot Roomba® Plus 575 Combo AutoWash™ to keep the 493 GF as clean as it is empty.',
+    image: '/images/burger/business-industries.png', alt: 'GigaFactory 493 and its autonomous vacuum fleet',
+    items: [
+      ['BLS Manufacturing™', 'Industrial & Strategic Outsourcing of Everything'],
+      ['Bolos Advanced R&D™', 'Advanced Research & Problem Development'],
+      ['Bolos Energy™', 'Renewable Energy & Intern-Powered Infrastructure'],
+      ['Bolos Defense Systems™', 'Defense Systems & Proactive Peace Engineering'],
+      ['GigaFactory 493™', 'Advanced Manufacturing & Autonomous Vacuum Robotics'],
+    ],
+  },
+  {
+    key: 'media', caption: 'CFAKE - The Bolos News handcrafted fake news manufacture.',
+    image: '/images/burger/business-media.png', alt: 'CFAKE media workspace',
+    items: [
+      ['BLS-HAZY™', 'Creative Agency & Strategic Confusion'],
+      ['Bolosmard™', 'Publishing House & Fine Art Paper Furniture Shims'],
+      ['Bolos Universal Noise™', 'Music Label & Premium Noise Manufacturing'],
+      ['Studio Bolos Pictures™', 'Motion Pictures & Reality Enhancement'],
+      ['CFAKE™', 'News Media & Handcrafted Misinformation'],
+      ['Media1Bolos™', 'Television Production & Attention Engineering'],
+      ['BoLlOSS-SUD Fanzine', 'Independent Publishing & Corporate Nuisance'],
+    ],
+  },
+  {
+    key: 'retail', caption: 'Bolos La Boutique - The World’s Most Wanted Unessentials & Lost Treasures.',
+    image: '/images/burger/business-retail.png', alt: 'Bolos La Boutique editorial scene',
+    items: [
+      ['Bls Luxury Consumer Goods™', 'Everyday Unessentials & Lifestyle Solutions'],
+      ['Bolos La Boutique™', 'Global Retail & Premium Impulse Dropshipping'],
+      ['Bolos Marketplace™', 'E-Commerce & Frictionless Overconsumption'],
+      ['Bolos Licensing™', 'Brand Licensing & Intellectual Property Monetisation'],
+    ],
+  },
+  {
+    key: 'consulting', caption: 'Le Bistrot des Bolos — Where strategic disagreements become actionable insights.',
+    image: '/images/burger/business-consulting.png', alt: 'Le Bistrot des Bolos consulting scene',
+    items: [
+      ['Le Bistrot des Bolos™', 'Strategic Consulting & Conflicting Expertise. Home to Gégé & Gréta’s proprietary consulting methodology, Le Bistrot des Bolos™ combines decades of experience, incompatible worldviews and carefully structured disagreement to deliver several strategically defensible answers to the same question.'],
+      ['Luiggi’s Alpha Camp™', 'Executive Leadership & Masculinity Enhancement. Because some strategic problems cannot be solved around a table, Luiggi’s Alpha Camp™ develops the confidence, dominance and executive presence required to lead decisively — whether anyone is following or not.'],
+    ],
+  },
+  {
+    key: 'education', caption: 'La Crèche à Bolos — Because financial literacy should start before actual literacy.',
+    image: '/images/burger/business-education.png', alt: 'La Crèche à Bolos education scene',
+    kicker: 'ERROR 404 — EDUCATION NOT FOUND',
+    body: [
+      'The French State outsourced education to Bolos Education™. Bolos Education™ subsequently outsourced education back to French teachers.',
+      'This created an infinite public-private outsourcing loop in which education technically exists, but can no longer be located.',
+      'If you don’t understand the model, please go back to school.',
+    ],
+  },
+  {
+    key: 'internship', caption: 'Bolos Internship™ — Investing in young talent. With their own money.',
+    image: '/images/burger/business-internship.png', alt: 'Bolos Internship programme participants',
+    kicker: 'READY TO INVEST IN YOUR FUTURE?',
+    body: [
+      'If you’re ambitious, driven and ready to go the extra mile, join our Traverse la Rue* program and turn your potential into professional experience.',
+      'Take the first step. Cross the street. Invest in yourself. Invest in The Bolos Universal Company™.',
+      'Join the family. Join the future. Join the only company where your boss will always be honest with you.',
+    ],
+    quote: '“On va t’exploiter.”', footnote: '*Application processing fee applies.',
+  },
+];
+---
+
+<div class="prototype" id="burger-prototype">
+  <header class="topbar">
+    <a href="/en/" class="wordmark">THE BOLOS UNIVERSAL COMPANY™</a>
+    <nav aria-label="Language"><span aria-current="page">EN</span><span aria-hidden="true"> / </span><a href="/fr/" lang="fr" hreflang="fr">FR</a></nav>
+  </header>
+  <main class="scene" aria-label="Home">
+    <img class="headquarters" src="/images/home/hero-headquarters.png" alt="The Bolos Universal Company headquarters" fetchpriority="high" />
+    <h1 class="sr-only">The Bolos Universal Company</h1>
+    <div class="menu-stage">
+      <button class="burger-toggle" aria-label="Close menu" aria-expanded="true" aria-controls="column-a"><span></span><span></span></button>
+
+      <section class="panel column-a" id="column-a" data-open="true" aria-label="Main menu">
+        <div class="panel-cap"></div>
+        <div class="panel-content a-content">
+          <nav aria-label="Main sections">
+            {sections.map(section => section.panel ? (
+              <button class="section-choice" data-section={section.key} data-panel-section={section.key} aria-pressed="false" aria-expanded="false" aria-controls="column-b column-c">
+                <span>{section.first}{section.second && <><br />{section.second}</>}</span>
+              </button>
+            ) : (
+              <a class="section-choice" href={section.href} data-section={section.key}><span>{section.first}</span></a>
+            ))}
+          </nav>
+          <div class="a-footer">
+            <img class="socials-image" src="/images/burger/socials.png" alt="" aria-hidden="true" />
+          </div>
+        </div>
+      </section>
+
+      <div class="folding-panels" id="folding-panels">
+      <section class="panel column-b" id="column-b" data-open="false" aria-label="Section navigation" aria-hidden="true" inert>
+        <div class="panel-cap"><button class="close-panel" data-close="b" aria-label="Close section navigation">×</button></div>
+        <div class="panel-content b-content">
+          {sectionOverviews.map(overview => (
+            <article class="overview-state" data-overview={overview.key} hidden>
+              <h2>{overview.title}</h2>
+              <div class="business-description">{overview.paragraphs.map(paragraph => <p>{paragraph}</p>)}</div>
+              <nav class="business-list section-link-list" aria-label={`${overview.title} links`}>
+                {overview.links.map(link => <a class="business-choice" href={overview.href}><span>{link}</span></a>)}
+              </nav>
+            </article>
+          ))}
+          <article class="overview-state business-overview" data-overview="businesses" hidden>
+            <div class="business-intro">
+              <h2 id="business-heading">Businesses &amp; Maisons</h2>
+              <div class="business-description" id="business-description">{businessOverviews[0].paragraphs.map(paragraph => <p>{paragraph}</p>)}</div>
+            </div>
+            <nav class="business-list" aria-label="Businesses">
+              {businessOverviews.map(business => (
+                <button class="business-choice" data-business={business.key} data-title={business.title} data-description={JSON.stringify(business.paragraphs)} aria-controls="column-c" aria-expanded="false"><span>{business.label}</span></button>
+              ))}
+            </nav>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel column-c" id="column-c" data-open="false" aria-label="Selected section" aria-hidden="true" inert>
+        <div class="panel-cap"><button class="close-panel" data-close="c" aria-label="Close section details">×</button></div>
+        <div class="panel-content c-content">
+          {details.map(detail => (
+            <article class="detail-state" data-detail={detail.key} hidden>
+              <h2 class="editorial-caption">{detail.caption}</h2>
+              <img class="editorial-image" src={detail.image} alt={detail.alt} loading="lazy" />
+              <div class="editorial-copy">
+                {detail.kicker && <h3 class="detail-kicker">{detail.kicker}</h3>}
+                {detail.body?.map(paragraph => <p>{paragraph}</p>)}
+                {detail.items && <ul class="editorial-list">{detail.items.map(([name, description]) => <li><strong>{name}</strong> — {description}</li>)}</ul>}
+                {detail.quote && <blockquote>{detail.quote}</blockquote>}
+                {detail.footnote && <p class="detail-footnote">{detail.footnote}</p>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<style>
+  /* Tous les sélecteurs restent limités au prototype de la Home EN. */
+  :global(body:has(#burger-prototype)) { margin: 0; background: #fff; }
+  .prototype { font-family: var(--font-corporate, 'Bellota Text', Arial, sans-serif); color: #111; line-height: 1.45; }
+  .prototype *, .prototype *::before, .prototype *::after { box-sizing: border-box; }
+  .prototype button, .prototype a { -webkit-tap-highlight-color: transparent; }
+  .prototype button { font: inherit; cursor: pointer; }
+  .prototype a { color: inherit; text-decoration: none; }
+  .prototype button:focus-visible, .prototype a:focus-visible { outline: 1px solid #111; outline-offset: 5px; }
+  .topbar { height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; font-size: 10px; letter-spacing: .035em; }
+  .wordmark { font-weight: 600; }
+  .scene { position: relative; min-height: 810px; height: calc(100svh - 42px); margin: 0 8px 12px; border-radius: 48px; overflow: hidden; }
+  .headquarters { position: absolute; width: 100%; height: 100%; inset: 0; object-fit: cover; object-position: center; }
+  .menu-stage {
+    --a-width: 15.4%; --b-width: 19%; --c-width: 33%; --cap-height: 72px;
+    --open-time: 950ms; --close-time: 680ms; --fade-time: 120ms;
+    --ease: cubic-bezier(.22, .61, .36, 1);
+    position: absolute; inset: 12px 12px auto; height: calc(100% - 120px); pointer-events: none;
+  }
+  .panel { position: absolute; top: 0; height: 100%; background: rgb(255 255 255 / 91%); border-right: 1px solid rgb(0 0 0 / 11%); clip-path: inset(0 100% 0 0); pointer-events: none; transition: clip-path var(--close-time) var(--ease) var(--fade-time); }
+  .panel[data-open='true'] { clip-path: inset(0 0 0 0); pointer-events: auto; transition: clip-path var(--open-time) var(--ease); }
+  .column-a { left: 0; width: var(--a-width); border-top-left-radius: 35px; }
+  .folding-panels {
+    position: absolute;
+    top: 0;
+    left: var(--a-width);
+    width: calc(var(--b-width) + var(--c-width));
+    height: 100%;
+    display: grid;
+    grid-template-columns: 36.5385% 63.4615%;
+    pointer-events: none;
+  }
+  .folding-panels .panel {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .folding-panels.is-opening {
+    animation: connected-reveal 960ms cubic-bezier(.4, 0, .2, 1) both;
+  }
+  .folding-panels.is-opening .panel,
+  .folding-panels.is-opening .panel[data-open='true'] {
+    clip-path: inset(0);
+    transition: none;
+  }
+  @keyframes connected-reveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0); }
+  }
+  .panel-cap { height: var(--cap-height); border-bottom: 1px solid rgb(0 0 0 / 32%); position: relative; }
+  .panel-content { height: calc(100% - var(--cap-height)); overflow-y: auto; opacity: 0; transition: opacity var(--fade-time) ease-out; }
+  .panel[data-open='true'] .panel-content { opacity: 1; transition: opacity 100ms ease-out; }
+  .burger-toggle { position: absolute; left: 22px; top: 20px; width: 32px; height: 32px; padding: 4px; z-index: 3; border: 0; background: transparent; pointer-events: auto; }
+  .burger-toggle span { display: block; position: absolute; left: 4px; top: 15px; height: 1px; width: 24px; background: #111; transition: transform 500ms ease-out; }
+  .burger-toggle span:first-child { transform: translateY(-4px); }
+  .burger-toggle span:last-child { transform: translateY(4px); }
+  .burger-toggle[aria-expanded='true'] span:first-child { transform: rotate(45deg); }
+  .burger-toggle[aria-expanded='true'] span:last-child { transform: rotate(-45deg); }
+  .close-panel { position: absolute; right: 14px; top: 19px; width: 32px; height: 32px; border: 0; background: none; color: #555; font-size: 23px !important; font-weight: 300; opacity: 0; transition: opacity var(--fade-time) ease-out; }
+  .panel[data-open='true'] .close-panel { opacity: 1; }
+  .a-content { display: flex; flex-direction: column; }
+  .a-content nav { padding: 20px 8px 16px; }
+  .prototype .section-choice { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 66px; padding: 12px 0; border: 0; background: none; color: #797979; font-family: inherit; font-weight: 400; font-style: normal; font-size: 14px !important; line-height: 1.3 !important; text-align: center; text-decoration: none; }
+  .prototype .section-choice:nth-child(-n+4) { min-height: 86px; }
+  .section-choice span { display: block; transform: scale(1); transition: transform 700ms var(--ease), color 500ms ease-out; }
+  .prototype .section-choice:is(:hover, :focus-visible, [aria-pressed='true']) { color: #080808; }
+  .section-choice:is(:hover, :focus-visible) span { transform: scale(1.15); }
+  .section-choice[aria-pressed='true'] span { transform: scale(1.4); font-style: italic; }
+  .a-footer { border-top: 1px solid rgb(0 0 0 / 10%); flex: 1; min-height: 60px; display: flex; align-items: flex-end; justify-content: center; padding: 16px 12px; }
+  .socials-image { display: block; width: min(80%, 180px); height: auto; opacity: .8; }
+  .b-content { padding: 22px 18px; }
+  .b-content h2 { font-size: 18px; font-weight: 400; font-style: italic; line-height: 1.3; margin: 0 0 20px; }
+  .business-description { font-size: 12px; line-height: 1.75; color: #555; }
+  .business-description p { margin: 0 0 20px; }
+  .business-list { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 42px; }
+  .business-intro { height: 265px; overflow: hidden; }
+  .business-overview > .business-list { margin-top: 0; }
+  .section-link-list { gap: 10px; margin-top: 30px; }
+  .business-choice { border: 0; padding: 4px 0; background: none; color: #555; text-align: left; font-size: 14px !important; }
+  .section-link-list .business-choice { font-size: 11px !important; letter-spacing: .04em; }
+  .business-choice span { position: relative; display: inline-block; }
+  .business-choice span::after { content: ''; position: absolute; height: 1px; background: currentColor; left: 0; right: 0; bottom: -5px; transform: scaleX(0); transform-origin: left; transition: transform 900ms var(--ease); }
+  .business-choice:hover span::after, .business-choice:focus-visible span::after { transform: scaleX(1); }
+  .business-choice[aria-expanded='true'] { color: #111; }
+  .c-content { position: relative; padding: 26px 28px; transform: translateX(0); }
+  .column-c[data-open='true'] .c-content { transform: translateX(0); transition: opacity 100ms ease-out; }
+  .column-c[data-open='false'] .c-content { transform: translateX(0); transition: opacity var(--fade-time) ease-out; }
+  .folding-panels.is-opening .column-b .panel-content,
+  .folding-panels.is-opening .column-c .panel-content,
+  .folding-panels.is-opening .column-c .c-content {
+    transition: none;
+    animation: none;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .folding-panels .c-sheet-outgoing {
+    position: absolute;
+    top: var(--cap-height);
+    left: 0;
+    width: 100%;
+    height: calc(100% - var(--cap-height));
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  .folding-panels .c-sheet-outgoing.is-sheet-leaving {
+    animation:
+      c-sheet-out-move 820ms var(--ease) both,
+      c-sheet-out-fade 560ms ease-out 140ms both;
+  }
+  .folding-panels .column-c .c-content.is-sheet-incoming {
+    z-index: 3;
+    transition: none;
+    animation: c-sheet-in 820ms var(--ease) 170ms both;
+  }
+  @keyframes c-sheet-out-move {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-100%, 0, 0); }
+  }
+  @keyframes c-sheet-out-fade {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  @keyframes c-sheet-in {
+    from { opacity: 0; transform: translate3d(100%, 0, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  .editorial-caption { font-size: 11px; font-weight: 400; line-height: 1.5; color: #555; margin: 0 0 18px; }
+  .editorial-image { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
+  [data-detail='education'] .editorial-image { object-position: center 18%; }
+  .overview-state, .detail-state { opacity: 1; transform: translate3d(0,0,0); }
+  .state-exiting { opacity: 0; transform: translate3d(-14px,0,0); transition: opacity 90ms ease-out, transform 90ms ease-out; }
+  .state-entering { opacity: 0; transform: translate3d(16px,0,0); }
+  .state-entering.state-entering-active { opacity: 1; transform: translate3d(0,0,0); transition: opacity 250ms ease-out, transform 250ms var(--ease); }
+  .editorial-copy { margin-top: 30px; font-size: 11px; line-height: 1.65; letter-spacing: .04em; color: #5a5a5a; }
+  .editorial-copy p { margin: 0 0 16px; }
+  .detail-kicker { margin: 0 0 16px; font-size: 11px; font-weight: 500; letter-spacing: .14em; color: #303030; }
+  .editorial-list { list-style: none; padding: 0; margin: 0; }
+  .editorial-list li { margin-bottom: 18px; }
+  .editorial-list strong { font-weight: 600; color: #303030; }
+  .editorial-copy blockquote { margin: 20px 0; font-style: italic; color: #303030; }
+  .detail-footnote { font-size: 9px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  [hidden] { display: none !important; }
+  @media (max-width: 1100px) {
+    .menu-stage { --a-width: 25%; --b-width: 30%; --c-width: 45%; }
+    .b-content { padding: 22px 16px; }
+    .c-content { padding: 26px 20px; }
+  }
+  @media (max-width: 700px) {
+    .scene { margin: 0; border-radius: 24px; min-height: 760px; overflow-x: auto; }
+    .menu-stage { width: 960px; --a-width: 22%; --b-width: 29%; --c-width: 49%; height: calc(100% - 36px); }
+    .wordmark { font-size: 8px; }
+    .business-intro { height: 320px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prototype *, .prototype *::before, .prototype *::after { transition-duration: 1ms !important; transition-delay: 0ms !important; animation-duration: 1ms !important; animation-delay: 0ms !important; }
+    .state-exiting, .state-entering, .state-entering.state-entering-active { opacity: 1; transform: none; }
+  }
+</style>
+
+<script>
+  const prototype = document.querySelector<HTMLElement>('#burger-prototype')!;
+  const columnA = prototype.querySelector<HTMLElement>('#column-a')!;
+  const foldingPanels = prototype.querySelector<HTMLElement>('#folding-panels')!;
+  const columnB = prototype.querySelector<HTMLElement>('#column-b')!;
+  const columnC = prototype.querySelector<HTMLElement>('#column-c')!;
+  const burger = prototype.querySelector<HTMLButtonElement>('.burger-toggle')!;
+  const sections = [...prototype.querySelectorAll<HTMLButtonElement>('[data-panel-section]')];
+  const businesses = [...prototype.querySelectorAll<HTMLButtonElement>('[data-business]')];
+  const overviewStates = [...prototype.querySelectorAll<HTMLElement>('[data-overview]')];
+  const detailStates = [...prototype.querySelectorAll<HTMLElement>('[data-detail]')];
+  const cContent = prototype.querySelector<HTMLElement>('#column-c > .c-content')!;
+  const businessHeading = prototype.querySelector<HTMLElement>('#business-heading')!;
+  const businessDescription = prototype.querySelector<HTMLElement>('#business-description')!;
+  let selectedSection: HTMLButtonElement | null = null;
+  let selectedBusiness: HTMLButtonElement | null = null;
+  let sectionSwapToken = 0;
+  let detailSwapToken = 0;
+  let openingTimer: number | undefined;
+  let detailSwapTimer: number | undefined;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function setPanel(panel: HTMLElement, open: boolean) {
+    panel.dataset.open = String(open);
+    panel.inert = !open;
+    panel.setAttribute('aria-hidden', String(!open));
+  }
+  function clearStateClasses(state: HTMLElement) {
+    state.classList.remove('state-exiting', 'state-entering', 'state-entering-active');
+  }
+  function showStateImmediately(states: HTMLElement[], key: string) {
+    states.forEach(state => {
+      clearStateClasses(state);
+      state.hidden = state.dataset.overview !== key && state.dataset.detail !== key;
+    });
+  }
+  function hideStates(states: HTMLElement[]) {
+    states.forEach(state => {
+      clearStateClasses(state);
+      state.hidden = true;
+    });
+  }
+  function visibleState(states: HTMLElement[]) {
+    return states.find(state => !state.hidden);
+  }
+  function beginExit(state?: HTMLElement) {
+    if (!state) return;
+    clearStateClasses(state);
+    state.classList.add('state-exiting');
+  }
+  function prepareIncoming(states: HTMLElement[], key: string) {
+    let incoming: HTMLElement | undefined;
+    states.forEach(state => {
+      clearStateClasses(state);
+      const matches = state.dataset.overview === key || state.dataset.detail === key;
+      state.hidden = !matches;
+      if (matches) incoming = state;
+    });
+    incoming?.classList.add('state-entering');
+    return incoming;
+  }
+  const wait = (duration: number) => new Promise(resolve => window.setTimeout(resolve, duration));
+  const nextFrame = () => new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+
+  function finishOpening() {
+    if (openingTimer) window.clearTimeout(openingTimer);
+    openingTimer = undefined;
+    foldingPanels.classList.remove('is-opening');
+  }
+
+  function finishDetailSwap() {
+    if (detailSwapTimer) window.clearTimeout(detailSwapTimer);
+    detailSwapTimer = undefined;
+    cContent.classList.remove('is-sheet-incoming');
+    columnC.querySelectorAll('.c-sheet-outgoing').forEach(layer => layer.remove());
+    detailStates.forEach(clearStateClasses);
+  }
+
+  async function transitionDetail(key: string) {
+    finishOpening();
+    const token = ++detailSwapToken;
+    const outgoing = visibleState(detailStates);
+    if (outgoing?.dataset.detail === key) return;
+    finishDetailSwap();
+    if (reducedMotion.matches) { showStateImmediately(detailStates, key); return; }
+
+    const outgoingSheet = cContent.cloneNode(true) as HTMLElement;
+    outgoingSheet.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+    outgoingSheet.classList.remove('is-sheet-incoming');
+    outgoingSheet.classList.add('c-sheet-outgoing');
+    outgoingSheet.inert = true;
+    outgoingSheet.setAttribute('aria-hidden', 'true');
+    columnC.append(outgoingSheet);
+
+    const outgoingImages = Array.from(
+      outgoingSheet.querySelectorAll<HTMLImageElement>('[data-detail]:not([hidden]) img')
+    );
+    outgoingImages.forEach(image => { image.loading = 'eager'; });
+    await Promise.all(outgoingImages.map(image => image.decode().catch(() => undefined)));
+    await nextFrame();
+    await nextFrame();
+    if (token !== detailSwapToken || !outgoingSheet.isConnected) return;
+
+    showStateImmediately(detailStates, key);
+    outgoingSheet.classList.add('is-sheet-leaving');
+    cContent.classList.remove('is-sheet-incoming');
+    void cContent.offsetWidth;
+    cContent.classList.add('is-sheet-incoming');
+    detailSwapTimer = window.setTimeout(() => {
+      if (token === detailSwapToken) finishDetailSwap();
+    }, 1020);
+  }
+
+  async function transitionOverview(overviewKey: string) {
+    const token = ++sectionSwapToken;
+    if (reducedMotion.matches) {
+      showStateImmediately(overviewStates, overviewKey);
+      return;
+    }
+    beginExit(visibleState(overviewStates));
+    await wait(90);
+    if (token !== sectionSwapToken) return;
+    const incomingB = prepareIncoming(overviewStates, overviewKey);
+    await nextFrame();
+    if (token !== sectionSwapToken) return;
+    incomingB?.classList.add('state-entering-active');
+    await wait(260);
+    if (token === sectionSwapToken && incomingB) clearStateClasses(incomingB);
+  }
+
+  function transitionSection(overviewKey: string, detailKey: string) {
+    finishOpening();
+    void transitionOverview(overviewKey);
+    transitionDetail(detailKey);
+  }
+
+  function openDetailPanel(detailKey: string) {
+    finishOpening();
+    finishDetailSwap();
+    detailSwapToken++;
+    showStateImmediately(detailStates, detailKey);
+    setPanel(columnC, true);
+  }
+
+  function transitionSectionWithClosedC(overviewKey: string, detailKey: string) {
+    finishOpening();
+    void transitionOverview(overviewKey);
+    openDetailPanel(detailKey);
+  }
+
+  function setBusinessOverviewDefault() {
+    const defaultBusiness = businesses[0];
+    selectedBusiness = null;
+    businessHeading.textContent = defaultBusiness.dataset.title!;
+    const paragraphs = JSON.parse(defaultBusiness.dataset.description!) as string[];
+    businessDescription.replaceChildren(...paragraphs.map(text => Object.assign(document.createElement('p'), { textContent: text })));
+    businesses.forEach(button => button.setAttribute('aria-expanded', 'false'));
+  }
+
+  function openBusinessesPanel() {
+    sectionSwapToken++;
+    detailSwapToken++;
+    finishOpening();
+    finishDetailSwap();
+    setBusinessOverviewDefault();
+    showStateImmediately(overviewStates, 'businesses');
+    hideStates(detailStates);
+    setPanel(columnC, false);
+    setPanel(columnB, true);
+  }
+
+  function transitionIntoBusinesses() {
+    finishOpening();
+    finishDetailSwap();
+    detailSwapToken++;
+    setBusinessOverviewDefault();
+    hideStates(detailStates);
+    setPanel(columnC, false);
+    void transitionOverview('businesses');
+  }
+
+  function openConnectedPanels(overviewKey: string, detailKey: string) {
+    sectionSwapToken++;
+    detailSwapToken++;
+    finishOpening();
+    finishDetailSwap();
+    showStateImmediately(overviewStates, overviewKey);
+    showStateImmediately(detailStates, detailKey);
+    setPanel(columnB, true);
+    setPanel(columnC, true);
+    if (reducedMotion.matches) return;
+    void foldingPanels.offsetWidth;
+    foldingPanels.classList.add('is-opening');
+    openingTimer = window.setTimeout(finishOpening, 980);
+  }
+  function closeC() {
+    detailSwapToken++;
+    finishOpening();
+    finishDetailSwap();
+    setPanel(columnC, false);
+    businesses.forEach(button => button.setAttribute('aria-expanded', 'false'));
+  }
+  function closeB() {
+    sectionSwapToken++;
+    closeC();
+    setPanel(columnB, false);
+    sections.forEach(button => button.setAttribute('aria-expanded', 'false'));
+  }
+  function toggleMenu() {
+    const open = columnA.dataset.open !== 'true';
+    if (!open) closeB();
+    setPanel(columnA, open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  function setBusinessCopy(button: HTMLButtonElement) {
+    selectedBusiness = button;
+    businessHeading.textContent = button.dataset.title!;
+    const paragraphs = JSON.parse(button.dataset.description!) as string[];
+    businessDescription.replaceChildren(...paragraphs.map(text => Object.assign(document.createElement('p'), { textContent: text })));
+    businesses.forEach(item => item.setAttribute('aria-expanded', String(item === button)));
+  }
+  function selectBusiness(button: HTMLButtonElement) {
+    setBusinessCopy(button);
+    const key = button.dataset.business!;
+    if (columnC.dataset.open === 'true') transitionDetail(key);
+    else openDetailPanel(key);
+  }
+
+  burger.addEventListener('click', toggleMenu);
+  sections.forEach(button => button.addEventListener('click', () => {
+    if (selectedSection === button && columnB.dataset.open === 'true') { closeB(); return; }
+    const bIsOpen = columnB.dataset.open === 'true';
+    const cIsOpen = columnC.dataset.open === 'true';
+    selectedSection = button;
+    sections.forEach(section => {
+      section.setAttribute('aria-pressed', String(section === button));
+      section.setAttribute('aria-expanded', String(section === button));
+    });
+    const key = button.dataset.panelSection!;
+    if (key === 'businesses') {
+      if (bIsOpen) transitionIntoBusinesses();
+      else openBusinessesPanel();
+    } else {
+      selectedBusiness = null;
+      businesses.forEach(item => item.setAttribute('aria-expanded', 'false'));
+      if (!bIsOpen) openConnectedPanels(key, key);
+      else if (cIsOpen) transitionSection(key, key);
+      else transitionSectionWithClosedC(key, key);
+    }
+  }));
+  businesses.forEach(button => button.addEventListener('click', () => {
+    if (selectedBusiness === button && columnC.dataset.open === 'true') { closeC(); return; }
+    selectBusiness(button);
+  }));
+  prototype.querySelector('[data-close="b"]')!.addEventListener('click', () => { selectedSection?.focus(); closeB(); });
+  prototype.querySelector('[data-close="c"]')!.addEventListener('click', () => { (selectedBusiness ?? selectedSection)?.focus(); closeC(); });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    if (columnC.dataset.open === 'true') { (selectedBusiness ?? selectedSection)?.focus(); closeC(); }
+    else if (columnB.dataset.open === 'true') { selectedSection?.focus(); closeB(); }
+    else if (columnA.dataset.open === 'true') { burger.focus(); toggleMenu(); }
+  });
+</script>

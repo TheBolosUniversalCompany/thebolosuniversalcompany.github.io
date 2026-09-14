@@ -1,0 +1,136 @@
+---
+import { presidents } from '../data/history-future';
+import '../styles/history-future.css';
+---
+<main class="history-page">
+  <section class="history-hero" aria-labelledby="history-title">
+    <img class="history-hero-image" data-parallax src="/images/history-future/hero-gallery.png" alt="Portrait gallery of The Bolos Universal Company presidents" fetchpriority="high" />
+    <div class="history-logo" aria-hidden="true"><img src="/images/brand/bolos.svg" alt="" width="1920" height="1080" /></div>
+    <div class="history-hero-title"><h1 id="history-title">History &amp; Future</h1><p>Back to the Future</p></div>
+  </section>
+
+  <section class="origins-heading history-gap" data-reveal><h2>OUR ORIGINS</h2></section>
+  <section class="origins-feature" data-reveal>
+    <figure><img src="/images/history-future/origins-founder.png" alt="Steve de la Gaulle, founder of Fifth RépublikLab" loading="lazy" /></figure>
+    <div class="origins-copy">
+      <h2>ORIGINS : A VISION AHEAD OF ITS TIME</h2>
+      <p>Long before entrepreneurship became a mindset, Steve de la Gaulle understood that Ze France could no longer afford to think backwards.</p>
+      <p>In the aftermath of the Second World War, the national operating mindset was fragmented.<br />Political stakeholders multiplied, decision-making slowed, governments struggled to scale and a disruptive competitor — Communism — was rapidly gaining market share.</p>
+      <p>Steve saw opportunity where others saw instability.</p>
+      <p>As early as 1946, he outlined a radically different governance model: stronger executive leadership, clearer accountability and a Head of State positioned above day-to-day stakeholder turbulence. Twelve years before the market was ready, the vision was already there.</p>
+      <p>In 1958, crisis created the perfect launch window.</p>
+      <p>Recalled to lead the enterprise during one of the most challenging periods in its modern history, Steve assembled a small, agile team around a simple ambition:</p>
+      <p>reinvent Ze France without starting from scratch.</p>
+      <p>Within months, legacy governance was streamlined, executive capabilities strengthened and a new institutional architecture brought to market.</p>
+      <p>They called it <em>Fifth RépublikLab™.</em></p>
+      <p>On 28 September 1958, the concept was submitted to one of the largest user-testing exercises in French history. 79.25% of participating users validated the new disruptive business model.</p>
+      <p>Steve had demonstrated what would become one of our most enduring principles: people do not always know what they need until visionary leadership provides it.</p>
+      <p>His pioneering approach combined strategic verticality, centralized vision, national ambition and an exceptional ability to transform political constraint into executive opportunity.</p>
+      <p>More than six decades later, that spirit still runs through the DNA of <em>The Bolos Universal Company™.</em></p>
+      <p>From <em>Fifth RépublikLab™</em> to the <em>Greatest Startup Nation™</em>, generations of leaders have continued Steve’s mission: anticipating needs, disrupting expectations and, above all, selling people what nobody ever asked for.</p>
+    </div>
+  </section>
+
+  <div class="history-gap history-gap--short" aria-hidden="true"></div>
+  <section class="savoir-faire" data-reveal>
+    <div class="savoir-copy">
+      <h2>HERITAGE &amp; SAVOIR-FAIRE</h2>
+      <p>For generations, our leaders have preserved and transmitted a unique institutional savoir-faire: vertical governance, strategic repositioning, premium storytelling and the delicate art of making unpopular decisions look inevitable.</p>
+      <p>These exceptional skills continue to shape every generation of <strong>The Bolos Universal Company™.</strong></p>
+    </div>
+    <img src="/images/history-future/heritage-shirt.png" alt="The Bolos Universal Company heritage T-shirt" loading="lazy" />
+  </section>
+
+  <div class="history-gap history-gap--divider" aria-hidden="true"></div>
+  <section class="legacy" aria-labelledby="legacy-title">
+    <h2 id="legacy-title" data-reveal>OUR HARITAGE &amp; LEGACY</h2>
+    <div class="presidents">
+      {presidents.map((president, index) => (
+        <article class:list={['president-card', { reverse: index % 2 === 1 }]}>
+          <figure class="president-portrait" data-reveal><img src={`/images/history-future/${president.image}`} alt={`${president.year} — ${president.name}`} loading="lazy" /></figure>
+          <div class="president-copy" data-reveal data-word-reveal>
+            <h3>{president.year} — {president.name} —</h3>
+            <p class="president-role"><em>{president.role}</em></p>
+            <p>{president.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <div class="history-gap history-gap--divider" aria-hidden="true"></div>
+  <section class="milestones" data-reveal aria-labelledby="milestones-title">
+    <h2 id="milestones-title">MILESTONES</h2>
+    <img src="/images/history-future/milestones.png" alt="Timeline from dinosaurs to Mc Jupiter" loading="lazy" />
+    <div class="milestone-anchors" aria-hidden="true"><span>Dinosaurs</span><span>Humanity</span><span>Mc Jupiter</span></div>
+  </section>
+
+  <section class="future-transition history-gap" data-reveal><p>Building on nearly seven decades of institutional innovation, we continue to<br />reinvent the future before anyone has asked for it.</p></section>
+
+  <section class="vision" data-reveal>
+    <div class="vision-copy">
+      <h2>THE FUTURE VISION 2070</h2><h3>IDIOCRACY. ONLY CHEAPER.</h3>
+      <p>Our ambition for 2070 is clear: complete the most splendid Hostile Takeover of Absurdity ever attempted while burning as much cash as any responsible startup should.</p>
+      <p>At <strong><em>The Bolos Universal Company™</em></strong>, we have never believed in “Fake it until you make it.” Our model is more ambitious: make it fake, and keep faking it.</p>
+      <p>Every new quarter is an opportunity to unveil a disruptive new Revolution. A new vision. A new milestone. A new strategic direction ambitious enough to make everyone forget the previous one — along with its promises, objectives and occasional failures.</p>
+      <p>Because progress is not about knowing where you are going. It is about moving forward with sufficient confidence that nobody dares to ask.</p>
+      <p>For decades, our leaders have mastered this unique ability to reinvent priorities, pivot convictions and turn yesterday’s failures into tomorrow’s strategic assets.</p>
+      <p>The secret is simple: keep pushing. In which direction matters considerably less.</p>
+      <p>As long as you know how to switch sides with confidence, maintain premium storytelling and demonstrate absolutely zero accountability.</p>
+    </div>
+    <img src="/images/history-future/vision-2070.png" alt="The Bolos Universal Company Vision 2070 T-shirt" loading="lazy" />
+  </section>
+  <div class="history-gap history-gap--final" aria-hidden="true"></div>
+</main>
+
+<script>
+  const page = document.querySelector<HTMLElement>('.history-page');
+  if (page) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Les nœuds d'espacement restent intacts : ponctuation et retours responsive sont préservés.
+    page.querySelectorAll<HTMLElement>('[data-word-reveal]').forEach(element => {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      const nodes: Text[] = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode as Text);
+      let index = 0;
+      nodes.forEach(node => {
+        const fragment = document.createDocumentFragment();
+        node.data.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) fragment.append(part);
+          else {
+            const span = document.createElement('span');
+            span.className = 'reveal-word';
+            span.style.setProperty('--word-index', String(index++));
+            span.textContent = part;
+            fragment.append(span);
+          }
+        });
+        node.replaceWith(fragment);
+      });
+    });
+    const reveals = page.querySelectorAll<HTMLElement>('[data-reveal]');
+    if (reducedMotion || !('IntersectionObserver' in window)) reveals.forEach(item => item.classList.add('is-visible'));
+    else {
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+      reveals.forEach(item => observer.observe(item));
+    }
+    const heroImage = page.querySelector<HTMLElement>('[data-parallax]');
+    if (heroImage && !reducedMotion) {
+      let queued = false;
+      const updateParallax = () => {
+        const hero = heroImage.parentElement!.getBoundingClientRect();
+        const progress = Math.max(-1, Math.min(1, -hero.top / Math.max(hero.height, 1)));
+        heroImage.style.setProperty('--hero-parallax', `${progress * 96}px`);
+        queued = false;
+      };
+      const requestUpdate = () => { if (!queued) { queued = true; requestAnimationFrame(updateParallax); } };
+      updateParallax();
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+    }
+  }
+</script>
